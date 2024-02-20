@@ -4,6 +4,12 @@ const app = express();
 // use port number stored in env or use 3000
 const PORT = process.env.PORT || 3000;
 
+
+app.use((req, res, next) => {
+    console.log(req.path, req.method)
+    next()
+})
+
 // route (works based on user requests and site responses)
 // this route starts at the root/main entry point of the website
 app.get('/', (req, res) => {
