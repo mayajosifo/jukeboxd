@@ -18,3 +18,5 @@ app.listen(PORT, () => {
     // this message is just here to let you know the server started successfully
   console.log(`Server is running on port ${PORT}`);
 });
+
+//TODO: set up Postman or some other method of testing routes on our API
