@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
 
+const reviewRoutes = require('./routes/reviews')
+
 // use port number stored in env or use 3000
 const PORT = process.env.PORT || 3000;
+
+app.use(express.json())
 
 // middleware2
 app.use((req, res, next) => {
@@ -12,12 +16,24 @@ app.use((req, res, next) => {
 
 // route (works based on user requests and site responses)
 // this route starts at the root/main entry point of the website
-app.get('/', (req, res) => {
+app.use('/api/reviews', reviewRoutes)
 
-    // sends a response that says 'welcome to jukeboxd'
-  res.send('welcome to jukeboxd');
 
-});
+
+//Routes to add
+/*Get 
+By album
+By artist
+By reviewID
+
+Post
+Only album posts allowed for now
+Put
+By ReviewID (wait until authentication/login complete)
+
+Delete
+By reviewID
+*/
 
 // tells the app to begin listening to requests from the specified port number
 app.listen(PORT, () => {
