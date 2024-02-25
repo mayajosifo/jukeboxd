@@ -5,26 +5,26 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.send('GET all review');
+    res.json({mssg:'GET all reviews'})
 })
 
 router.get('/:id', (res, req) => {
-    res.send('GET a specific review by ID')
+    res.json({mssg:'GET a specific review by ID'})
 })
 
 router.get('/:artist', (res, req) => {
-    res.send('GET a specific review by specific ARTIST')
+    res.json({mssg:'GET a review by artist'})
 })
 
 router.get('/:album', (res, req) => {
-    res.send('GET a specific review by specific ALBUM')
+    res.json({mssg:'GET a review by album'})
 })
 
 router.post('/', (res, req) =>{
-    res.send('POST a new review')
+    res.json({mssg:'POST a new review'})
 })
 
 router.delete('/:id', (res, req) => {
-    res.send('DELETE a specific review')
+    res.json({mssg:'DELETE a review by id'})
 
 })
