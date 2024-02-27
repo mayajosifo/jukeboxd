@@ -33,4 +33,4 @@ router.patch('/:id', (req, res) => {
     res.json({mssg:'UPDATE a review by id'})
 })
 
-module.exports = router;
+module.exports = router
