@@ -1,0 +1,117 @@
+=== Notes ===
+    Firestore Layout:
+        The way firestore is set up, each collection has documents with an associated unique hash ID string.
+        I include Id's in the fields section, but think of them as implicit fields.
+        However, when an Id is a field in another collection, that represents a subcollection relationship.
+
+        Think of the collection as the tree (or a table) and the document as a node (or a row entry).
+        Each document has Fields (attributes)
+            If a document is a row entry, these are the column entries.
+            Each Field has two things:
+                1) Type, which is one of the following:
+                    string
+                    number
+                    boolean
+                    map
+                    array
+                    null
+                    timestamp
+                    geopoint
+                    reference
+                2) Value
+        
+        Visual Representation is as follows...
+            Collection
+                Document#1
+                    Field#1
+                        Type
+                        Value
+                    Field#2
+                        Type
+                        Value
+                Document#2
+                    Field#1
+                        Type
+                        Value
+                    Field#2
+                        Type
+                        Value
+    
+
+
+=== Collections ===
+
+    "users"
+        Description: Each document is a unique user
+
+        Fields:
+            (userId)
+
+            userName
+                Type: string
+            email
+                Type: string (use some sort of requirement IN CODE for @ and .com format)
+            dateJoined
+                Type: timestamp
+            followingList
+                Type: array of strings
+            followersList
+                Type: array of strings
+    
+        Subcollections:
+            reviews: stores reviews by the user
+    
+
+    "albums"
+        Description: Each document is an album
+
+        Fields:
+            (albumId)
+
+            nameName
+                Type: string
+            artist
+                Type: string
+            releaseYear 
+                Type: number / string
+        
+    "reviews"
+        Description: Each document is a review of an album
+
+        Fields:
+            (reviewId)
+
+            userId
+                Type: string
+            albumId
+                Type: string
+            rating
+                Type: number
+            reviewText
+                Type: string
+            reviewDate
+                Type: timestamp
+
+    
+
+
+    Visual representation is as follows...
+        users (Collection)
+        └── userId (Document)
+            ├── username, email, dateJoined, followingList, followersList (Fields)
+            ├── reviews (Subcollection)
+                └── reviewId (Document)
+
+        albums (Collection)
+        └── albumId (Document)
+            ├── title, artist, releaseYear (Fields)
+
+        reviews (Collection)
+        └── reviewId (Document)
+            ├── userId, albumId, rating, reviewText, reviewDate (Fields)
+
+    
+
+Explanation on subcollections:
+    Notice that reviews is both a main level collection and also a subcollection. At this point in time,
+    this is ideal for querying. 
