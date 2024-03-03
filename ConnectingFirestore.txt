@@ -1,0 +1,81 @@
+Hi! Allow me to walk you through how to connect our Firebase project and the Firestore database within it 
+to your code script...
+
+For Python:
+
+    Initial Step:
+        You will need to install firebase-admin if you have not already by running the following command in the terminal:
+            
+            pip3 install --upgrade firebase-admin
+
+        Note: my computer uses pip3, yours may use pip
+
+
+
+    What to do in your code:
+        You can literally copy and paste the following imports and variable setups:
+
+            import firebase_admin
+            from firebase_admin import credentials
+            from firebase_admin import firestore
+
+            cred = credentials.Certificate("/Users/johnreinker/Desktop/admin_key.json")
+            firebase_admin.initialize_app(cred)
+
+            # Initialize Firestore
+            db = firestore.client()
+
+    Note: you will have to change the path that is the arguement of credentials.Certificate().
+    The example I provided is when the .json file names "admin_key" is on my Mac's Desktop.
+    This .json contains the server credetials of our firebase project.
+
+
+For React:
+
+    Initial Step:
+        You will need to install firebase with the following terminal command:
+
+            npm install firebase
+
+    What to do in your code:   
+        Note: The process here is a bit different than Python. In the greater React project 
+        (most likely in the src directory), you should make a file called something like firebase.js
+        In the tutorial, he actually created a new directory in src first, named it "config" and then
+        put the firebase.js file in config.
+
+        Note#2: In the tutoril, he stored the actual credential information in a .env (literally just called .env) 
+        file that he created in the greater project directory. He then had the firebase.js file read those values
+        from the .env file.
+        This is done for security reasons, as then the .env file can be put in .gitignore so its not shared with
+        or edited by people who get the repository
+
+
+        Ok so this is what to put in the firebase.js file:
+        
+            import { initializeApp } from "firebase/app";
+            import { getFirestore } from "firebase/firestore";
+
+            // the credentials
+            const firebaseConfig = {
+            apiKey: process.env.API_KEY,
+            authDomain: process.env.AUTH_DOMAIN,
+            projectId: process.env.PROJECT_ID,
+            storageBucket: process.env.STORAGE_BUCKET,
+            messagingSenderId: process.env.MESSAGING_SENDER_ID,
+            appId: process.env.APP_ID
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+
+            // Initialize Firestore
+            export const db = getFirestore(app);
+        
+        And here is what to put in the .env file:
+
+            API_KEY=AIzaSyCiyy-nWml1Mq7IpY-R_coieikUBRnTc3g
+            AUTH_DOMAIN=backboxd.firebaseapp.com
+            PROJECT_ID=backboxd
+            STORAGE_BUCKET=backboxd.appspot.com
+            MESSAGING_SENDER_ID=162903043809
+            APP_ID=1:162903043809:web:e9dab4fc7c6155aa9611a0
