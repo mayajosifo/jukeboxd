@@ -3,10 +3,10 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../config/firebase'; 
 
 function AddReviewForm() {
-    const [albumId, setAlbumId] = useState('');
+    const [albumsId, setAlbumsId] = useState('');
     const [rating, setRating] = useState('');
     const [reviewText, setReviewText] = useState('');
-    const [userId, setUserId] = useState('');
+    const [usersId, setUsersId] = useState('');
 
     const handleSubmit = async (e) => {
 
@@ -22,10 +22,10 @@ function AddReviewForm() {
 
         try {
             await addDoc(collection(db, "reviews"), {
-                albumId: albumId,
+                albumsId: albumsId,
                 rating: numericRating,
                 reviewText: reviewText,
-                userId: userId,
+                usersId: usersId,
                 reviewDate: new Date() // time stamp function :0
             });
 
@@ -35,10 +35,10 @@ function AddReviewForm() {
             console.log('Review added successfully');
 
             // will clear the form for you, can remove if necessary
-            setAlbumId('');
+            setAlbumsId('');
             setRating(''); 
             setReviewText('');
-            setUserId('');
+            setUsersId('');
         } catch (error) {
             console.error('Error adding review:', error); 
         }
@@ -52,7 +52,7 @@ function AddReviewForm() {
             <label>
                 {/* NOTE: wont be used in final version*/}
                 Album ID:
-                <input type="text" value={albumId} onChange={e => setAlbumId(e.target.value)} />
+                <input type="text" value={albumsId} onChange={e => setAlbumsId(e.target.value)} />
             </label>
             <br />
             <label>
@@ -74,7 +74,7 @@ function AddReviewForm() {
             <label>
                 {/* NOTE: wont be used in final version*/}
                 User ID:
-                <input type="text" value={userId} onChange={e => setUserId(e.target.value)} />
+                <input type="text" value={usersId} onChange={e => setUsersId(e.target.value)} />
             </label>
             <br />
             {/* a button of submit type will trigger onSubmit :)*/}
