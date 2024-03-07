@@ -4,11 +4,20 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const SearchAlbum = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchBy, setSearchBy] = useState('album');
   const [albums, setAlbums] = useState([]);
+
 
   const handleSearch = async () => {
     if (!searchTerm) return;
-    const q = query(collection(db, "albums"), where("albumName", "==", searchTerm));
+
+    let fieldToSearch
+    if (searchBy === 'album') {
+      fieldToSearch = "albumName";
+    } else if (searchBy === 'artist') {
+      fieldToSearch = "artistName";
+    }
+    const q = query(collection(db, "albums"), where(fieldToSearch, "==", searchTerm));
     const querySnapshot = await getDocs(q);
     const fetchedAlbums = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setAlbums(fetchedAlbums);
@@ -20,8 +29,12 @@ const SearchAlbum = () => {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search for albums..."
+        placeholder={`Search for ${searchBy === 'album' ? 'albums' : 'artists'}...`}
       />
+      <select value={searchBy} onChange={(e) => setSearchBy(e.target.value)}>
+        <option value = "album">Album</option>
+        <option value = "artist">Artist</option>
+      </select>
       <button onClick={handleSearch}>Search</button>
       <div>
         {albums.map(album => (
