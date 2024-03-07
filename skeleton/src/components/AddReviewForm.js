@@ -9,9 +9,11 @@ function AddReviewForm() {
     const [userId, setUserId] = useState('');
 
     const handleSubmit = async (e) => {
+
+        // wont allow users to submit empty form basically
         e.preventDefault(); 
 
-        
+        // constrains to 1-10 rating (we can do whatever range you want)
         const numericRating = parseInt(rating);
         if (numericRating < 1 || numericRating > 10 || isNaN(numericRating)) {
             alert('Rating must be a number between 1 and 10');
@@ -24,9 +26,15 @@ function AddReviewForm() {
                 rating: numericRating,
                 reviewText: reviewText,
                 userId: userId,
-                reviewDate: new Date() 
+                reviewDate: new Date() // time stamp function :0
             });
+
+            // try to use as many console logs as possible when you're developing it'll help people check if its working properly
+            // if you want to check console logs in chrome go to the 3 dots in the corner > more tools > developer tools > console
+            // it helps w debugging
             console.log('Review added successfully');
+
+            // will clear the form for you, can remove if necessary
             setAlbumId('');
             setRating(''); 
             setReviewText('');
@@ -37,9 +45,12 @@ function AddReviewForm() {
     };
 
     return (
+        // NOTE: this is NOT the final form we will use, it's here for testing.
+        // Ideally, users will not add in their userID or albumID, this should be managed by the user state/session
         <form onSubmit={handleSubmit}>
             <h2>Add Album Review</h2>
             <label>
+                {/* NOTE: wont be used in final version*/}
                 Album ID:
                 <input type="text" value={albumId} onChange={e => setAlbumId(e.target.value)} />
             </label>
@@ -61,10 +72,12 @@ function AddReviewForm() {
             </label>
             <br />
             <label>
+                {/* NOTE: wont be used in final version*/}
                 User ID:
                 <input type="text" value={userId} onChange={e => setUserId(e.target.value)} />
             </label>
             <br />
+            {/* a button of submit type will trigger onSubmit :)*/}
             <button type="submit">Submit Review</button>
         </form>
     );
