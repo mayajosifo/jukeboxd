@@ -9,40 +9,48 @@ function AddReviewForm() {
     const [usersId, setUsersId] = useState('');
 
     const handleSubmit = async (e) => {
-
-        // wont allow users to submit empty form basically
-        e.preventDefault(); 
-
-        // constrains to 1-10 rating (we can do whatever range you want)
+        e.preventDefault(); // Prevents the default form submission action
+    
+        // Convert rating to a number and check if it's between 1 and 10
         const numericRating = parseInt(rating);
         if (numericRating < 1 || numericRating > 10 || isNaN(numericRating)) {
             alert('Rating must be a number between 1 and 10');
-            return; 
+            return;
         }
-
+    
         try {
-            await addDoc(collection(db, "reviews"), {
+            // Add a new review document to the "reviews" collection
+            const docRef = await addDoc(collection(db, "reviews"), {
                 albumsId: albumsId,
                 rating: numericRating,
                 reviewText: reviewText,
                 usersId: usersId,
-                reviewDate: new Date() // time stamp function :0
+                reviewDate: new Date() // Adds a timestamp
             });
-
-            // try to use as many console logs as possible when you're developing it'll help people check if its working properly
-            // if you want to check console logs in chrome go to the 3 dots in the corner > more tools > developer tools > console
-            // it helps w debugging
-            console.log('Review added successfully');
-
-            // will clear the form for you, can remove if necessary
+    
+            console.log('Review added successfully', docRef.id);
+    
+            // Add the same review document to the "userReviews" subcollection of the specific user
+            await addDoc(collection(db, "users", usersId, "userReviews"), {
+                reviewId: docRef.id, // Store the ID of the review from the "reviews" collection
+                albumsId: albumsId,
+                rating: numericRating,
+                reviewText: reviewText,
+                reviewDate: new Date() // Adds a timestamp
+            });
+    
+            console.log('User review added successfully');
+    
+            // Clear the form fields after submission
             setAlbumsId('');
             setRating(''); 
             setReviewText('');
             setUsersId('');
         } catch (error) {
-            console.error('Error adding review:', error); 
+            console.error('Error adding review:', error);
         }
     };
+    
 
     return (
         // NOTE: this is NOT the final form we will use, it's here for testing.
