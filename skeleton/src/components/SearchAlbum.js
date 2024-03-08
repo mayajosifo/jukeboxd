@@ -11,6 +11,8 @@ const SearchAlbum = () => {
   const handleSearch = async () => {
     if (!searchTerm) return;
 
+    //const searchTermUpperCase = capitalizeWords(searchTerm);  //capitalizes search entry
+
     let fieldToSearch
     if (searchBy === 'album') {
       fieldToSearch = "albumName";
@@ -21,7 +23,15 @@ const SearchAlbum = () => {
     const querySnapshot = await getDocs(q);
     const fetchedAlbums = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setAlbums(fetchedAlbums);
+
   };
+
+  /*function capitalizeWords(str) {
+    return str.replace(/\b\w/g, function (char) {
+      return char.toUpperCase();
+    });    
+  } */
+
 
   return (
     <div>
