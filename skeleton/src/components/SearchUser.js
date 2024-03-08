@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const SearchUser = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [reviews, setReviews] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleSearch = async () => {
         if (!searchTerm) return;
+        setLoading(true);
     
         const q = query(collection(db, "reviews"), where("usersId", "==", searchTerm));
         const querySnapshot = await getDocs(q);
         const fetchedReviews = [];
-        //const fetchedReviews = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        //setReviews(fetchedReviews);
-    
-    
 
         for (const doc of querySnapshot.docs) {
             const reviewData = doc.data();
@@ -37,6 +35,7 @@ const SearchUser = () => {
         }
 
     setReviews(fetchedReviews);
+    setLoading(false);
 
 
 };
@@ -51,6 +50,7 @@ const SearchUser = () => {
             placeholder={`Search by User`}
           />
           <button onClick={handleSearch}>Search</button>
+          {loading && <p>Loading...</p>}
           <div>
             {reviews.map(review => (
               <div key={review.id}>
