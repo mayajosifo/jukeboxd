@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import SearchAlbum from './components/SearchAlbum'; // Adjust the path as necessary
+import SearchUser from './components/SearchUser';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       </header>
       <main>
         <SearchAlbum />
+        <SearchUser />
       </main>
     </div>
   );
