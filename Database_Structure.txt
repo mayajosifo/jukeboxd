@@ -2,6 +2,7 @@
     Firestore Layout:
         The way firestore is set up, each Collection has Documents with an associated unique hash ID string.
         I include Id's in the Fields section, but think of them as implicit Fields.
+        Technically each Id is a Document.
         You can also have (Sub)Collections inside Documents, which allows for data nesting. These (Sub)Collections then have their own Documents.
 
         Think of the Collection as the tree (or a table) and the Document as a node (or a row entry).
@@ -201,6 +202,18 @@
                 Type: string
             releaseYear 
                 Type: string
+
+
+         (Sub)Collections:
+            "albumReviews"
+                Description: Each Document stored is a reference (essentially a pointer) to a Document in the "reviews" Collection. 
+                             References have a path to a Document, so here it would be pointing to /reviews/<reviewsId>
+
+                Fields:
+                    (albumReviewsId)
+
+                    revRef
+                        Type: reference
         
     "reviews"
         Description: Each Document is a unique review of an album
@@ -218,6 +231,8 @@
                 Type: string
             reviewDate
                 Type: timestamp
+            reviewLikes (number of likes the review has)
+                Type: number
 
     
 
@@ -232,10 +247,13 @@
 
         albums (Collection)
         └── albumsId (Document)
-            └── albumName, artistName, coverUrl, releaseYear (Fields)
+            ├── albumName, artistName, coverUrl, releaseYear (Fields)S
+            └── albumReviews (SubCollection)
+                └── albumReviewsId (Document)
+                    └── revRef (Field)
 
         reviews (Collection)
         └── reviewId (Document)
-            └── usersId, albumsId, rating, reviewText, reviewDate (Fields)
+            └── usersId, albumsId, rating, reviewText, reviewDate, reviewLikes (Fields)
 
     
