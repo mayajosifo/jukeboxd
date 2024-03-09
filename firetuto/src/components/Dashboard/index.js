@@ -44,6 +44,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
       if (result.value) {
         const [employee] = employees.filter(employee => employee.id === id);
 
+        //DeleteDoc function
         deleteDoc(doc(db, "employees", id))
 
         Swal.fire({

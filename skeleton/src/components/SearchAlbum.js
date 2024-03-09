@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
-import { db } from '../config/firebase'; // Update the path to your firebase config file
+import { db } from '../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const SearchAlbum = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchBy, setSearchBy] = useState('album');
   const [albums, setAlbums] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   const handleSearch = async () => {
     if (!searchTerm) return;
-    const q = query(collection(db, "albums"), where("albumName", "==", searchTerm));
+    setLoading(true);
+
+    let fieldToSearch
+    if (searchBy === 'album') {
+      fieldToSearch = "albumName";
+    } else if (searchBy === 'artist') {
+      fieldToSearch = "artistName";
+    }
+    const q = query(collection(db, "albums"), where(fieldToSearch, "==", searchTerm));
     const querySnapshot = await getDocs(q);
     const fetchedAlbums = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setAlbums(fetchedAlbums);
+    setLoading(false)
+
   };
+
+
 
   return (
     <div>
@@ -20,9 +35,14 @@ const SearchAlbum = () => {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search for albums..."
+        placeholder={`Search for ${searchBy === 'album' ? 'albums' : 'artists'}...`}
       />
+      <select value={searchBy} onChange={(e) => setSearchBy(e.target.value)}>
+        <option value = "album">Album</option>
+        <option value = "artist">Artist</option>
+      </select>
       <button onClick={handleSearch}>Search</button>
+      {loading && <p>Loading...</p>}
       <div>
         {albums.map(album => (
           <div key={album.id}>
