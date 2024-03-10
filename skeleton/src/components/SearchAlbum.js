@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { db } from '../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 const SearchAlbum = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,7 +49,9 @@ const SearchAlbum = () => {
           <div key={album.id}>
             <h3>{album.albumName}</h3>
             <p>Artist: {album.artistName}</p>
-            {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
+            <Link to={`/album/${album.id}`}> {/* Wrap img with Link component */}
+              {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
+            </Link>
             <p>Year: {album.releaseYear}</p>
           </div>
         ))}
