@@ -17,8 +17,6 @@ function userPage() {
               <h1>Album Finder</h1>
             </header>
             <main>
-              <SearchAlbum />
-              <SearchUser />
               <AddReviewForm />
             </main>
           </div>

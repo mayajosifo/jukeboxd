@@ -7,6 +7,7 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import UserPage from './pages/UserPage';
 import ViewAlbum from './pages/ViewAlbum';
+import SearchPage from './pages/SearchPage';
 
 
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
@@ -29,6 +30,7 @@ function App() {
           path='/user-page' 
           element={isSignedIn ? <UserPage /> : <Navigate replace to='/' />}
           />
+        <Route path='/search/' element={<SearchPage/>} />
         <Route path='/album/:id' element={<ViewAlbum />} />
    
       

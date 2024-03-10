@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './SearchAlbum.css';
 import { db } from '../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
@@ -28,22 +29,24 @@ const SearchAlbum = () => {
 
   };
 
-
-
   return (
-    <div>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder={`Search for ${searchBy === 'album' ? 'albums' : 'artists'}...`}
-      />
+    <div className="search-album">
+      <div className="input-and-button">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder={`Search for ${searchBy === 'album' ? 'albums' : 'artists'}...`}
+        />
+        <button onClick={handleSearch}>Search</button>
+        {loading && <p>Loading...</p>}
+      </div>
+
       <select value={searchBy} onChange={(e) => setSearchBy(e.target.value)}>
         <option value = "album">Album</option>
         <option value = "artist">Artist</option>
       </select>
-      <button onClick={handleSearch}>Search</button>
-      {loading && <p>Loading...</p>}
+
       <div className="albums-container">
         {albums.map(album => (
           <div className="album-item" key={album.id}>
