@@ -9,7 +9,6 @@ const Navbar = () => {
         <Link to="/user-page">Home</Link>
         <Link to="/search">Search</Link>
         <Link to="/">Logout</Link>
-        <Link to="/user-page/">Profile</Link>
       </div>
     </nav>
   );
