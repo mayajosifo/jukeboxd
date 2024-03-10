@@ -38,6 +38,14 @@ function AddReviewForm() {
                 reviewText: reviewText,
                 reviewDate: new Date() // Adds a timestamp
             });
+
+            await addDoc(collection(db, "albums", usersId, "albumReviews"), {
+                reviewId: docRef.id, // Store the ID of the review from the "reviews" collection
+                albumsId: albumsId,
+                rating: numericRating,
+                reviewText: reviewText,
+                reviewDate: new Date() // Adds a timestamp
+            });
     
             console.log('User review added successfully');
     
