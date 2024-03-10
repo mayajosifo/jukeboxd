@@ -48,14 +48,11 @@ const SearchUser = () => {
             <button onClick={handleSearch}>Search</button>
             {loading && <p>Loading...</p>}
           </div>
-          <div>
+          <div className="albums-container">
             {reviews.map(review => (
               <div key={review.id}>
-                <h3>{review.id}</h3>
-                <p>Rating: {review.rating}</p>
-                <p>Review: {review.reviewText} </p>
-                <p>User ID: {review.usersId}</p>
-                <p>Album ID: {review.albumsId}</p>
+                <h1>Rating: {review.rating}/10</h1>
+                <h2>Review: {review.reviewText} </h2>
                 {review.album && (
                     <div>
                         <p>Album Name: {review.album.albumName}</p>
