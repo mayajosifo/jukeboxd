@@ -45,15 +45,44 @@ body, html, #root, .App {
   background-color: #0056b3;
 }
 
+
 /* Styles for displaying album information */
-.album-info {
+/*.album-info {
   margin-top: 20px;
 }
 
 .album-info img {
-  width: 100px; /* Adjust based on your preference */
+  width: 100px; / Adjust based on your preference /
   height: 100px;
   object-fit: cover;
+  border-radius: 5px;
+  margin-top: 10px;
+} */
+
+.albums-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.album-item {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 300px; /* Adjust width as needed */
+}
+
+.album-item h3 {
+  margin-top: 0;
+}
+
+.album-item p {
+  margin-bottom: 5px;
+}
+
+.album-item img {
+  width: 100%;
+  height: auto;
   border-radius: 5px;
   margin-top: 10px;
 }

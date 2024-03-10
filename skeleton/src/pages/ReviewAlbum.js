@@ -12,7 +12,7 @@ function ReviewAlbum() {
     return (
         <div>
             <h1>to album review page</h1>
-            <h1></h1>
+            <AddReviewForm />
         </div>
     )
 

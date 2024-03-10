@@ -44,12 +44,12 @@ const SearchAlbum = () => {
       </select>
       <button onClick={handleSearch}>Search</button>
       {loading && <p>Loading...</p>}
-      <div>
+      <div className="albums-container">
         {albums.map(album => (
-          <div key={album.id}>
+          <div className="album-item" key={album.id}>
             <h3>{album.albumName}</h3>
             <p>Artist: {album.artistName}</p>
-            <Link to={`/album/${album.id}`}> {/* Wrap img with Link component */}
+            <Link to={`/album/${album.id}`}> 
               {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
             </Link>
             <p>Year: {album.releaseYear}</p>
