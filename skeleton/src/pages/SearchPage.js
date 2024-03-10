@@ -12,7 +12,7 @@ const SearchPage = ({userId}) => {
 
   return ( 
     <div className="search-page">
-      <Navbar />
+      <Navbar userId={userId}/>
 
       <select value={searchBy} onChange={
         (e) => setSearchBy(e.target.value)}>

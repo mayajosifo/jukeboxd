@@ -25,7 +25,7 @@ function App() {
         <Route path='/' element={<SignInPage setIsSignedIn={setIsSignedIn} setUserId={setUserId}/>} />
         <Route path='/sign-up' element={<SignUpPage setIsSignedIn={setIsSignedIn} setUserId={setUserId}/>} />
         <Route 
-          path='/user-page/*' 
+          path='/user-page/:userId' 
           element={isSignedIn ? <UserPage userId={userId}/> : <Navigate replace to='/' />}
           />
         <Route path='/search/' element={<SearchPage userId={userId}/>} />
