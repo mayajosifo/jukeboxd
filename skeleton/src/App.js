@@ -17,20 +17,19 @@ import Navbar from './components/Navbar';
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false)
-  
-
+  const [userId, setUserId] = useState(null);
 
   return (
     <div>
       <Routes>
-        <Route path='/' element={<SignInPage setIsSignedIn={setIsSignedIn}/>} />
-        <Route path='/sign-up' element={<SignUpPage setIsSignedIn={setIsSignedIn}/>} />
+        <Route path='/' element={<SignInPage setIsSignedIn={setIsSignedIn} setUserId={setUserId}/>} />
+        <Route path='/sign-up' element={<SignUpPage setIsSignedIn={setIsSignedIn} setUserId={setUserId}/>} />
         <Route 
           path='/user-page/*' 
-          element={isSignedIn ? <UserPage /> : <Navigate replace to='/' />}
+          element={isSignedIn ? <UserPage userId={userId}/> : <Navigate replace to='/' />}
           />
-        <Route path='/search/' element={<SearchPage/>} />
-        <Route path='/album/:id' element={<ViewAlbum />} />
+        <Route path='/search/' element={<SearchPage userId={userId}/>} />
+        <Route path='/album/:id' element={<ViewAlbum userId={userId}/>} />
    
       
       </Routes>

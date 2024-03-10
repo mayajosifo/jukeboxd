@@ -3,7 +3,7 @@ import styles from './SignUpPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { createUser, newUserDoc, validateUsername } from '../config/firebase'
 
-function SignUpPage( { setIsSignedIn }) 
+function SignUpPage( { setIsSignedIn, setUserId }) 
 {
     const navigate = useNavigate();
     const [newUsername, setNewUsername] = useState('');
@@ -26,6 +26,7 @@ function SignUpPage( { setIsSignedIn })
                                 .then(() => {
                                     console.log('New user created')
                                     setIsSignedIn(true);
+                                    setUserId(user.uid);
                                     navigate('/user-page');
                                 })
                                 .catch((error) => {

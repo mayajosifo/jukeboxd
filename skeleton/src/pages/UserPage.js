@@ -8,7 +8,7 @@ import AddReviewForm from '../components/AddReviewForm';
 
 //import { Route, Routes, Navigate } from 'react-router-dom';
 
-function userPage() {
+function userPage({userId}) {
 
     return (
           <div className="App">

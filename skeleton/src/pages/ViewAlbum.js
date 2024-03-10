@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ViewAlbum.module.css';
 
-function ViewAlbum() {
+function ViewAlbum({userId}) {
     const [showReview, setShowReview] = useState(false);
     const [albumId, setAlbumId] = useState('');
 

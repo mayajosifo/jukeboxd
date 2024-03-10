@@ -6,7 +6,7 @@ import SearchArtist from '../components/SearchArtist';
 import SearchUser from '../components/SearchUser';
 import './SearchPage.css';
 
-const SearchPage = () => {
+const SearchPage = ({userId}) => {
 
   const [searchBy, setSearchBy] = useState('album');
 

@@ -4,23 +4,22 @@ import styles from './SignInPage.module.css';
 import { signIn } from '../config/firebase'
 
 
-function SignInPage({ setIsSignedIn }) 
+function SignInPage({ setIsSignedIn, setUserId }) 
 {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
-    const [userId, setUserId] = useState(null);
 
     const handleSignUpClick = () => {
         navigate('/sign-up');
     };
     
-    useEffect(() => {
+    /*useEffect(() => {
         if (userId) {
-            navigate(`/user-page/${userId}`);
+            navigate(`/user-page/${userId}`); 
         }
-    }, [userId, navigate]);
+    }, [userId, navigate]); */
 
     const handleSignIn = (e) => {
         e.preventDefault();
@@ -31,6 +30,7 @@ function SignInPage({ setIsSignedIn })
                 const user = userCredential.user;
                 setIsSignedIn(true);
                 setUserId(user.uid);
+                navigate(`/user-page/${user.uid}`)
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -49,6 +49,7 @@ function SignInPage({ setIsSignedIn })
 
 
     };
+
    
    return(
     <div className={styles.form}>
