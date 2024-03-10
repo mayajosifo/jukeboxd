@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './SignInPage.module.css';
 import { signIn } from '../config/firebase'
@@ -10,11 +10,17 @@ function SignInPage({ setIsSignedIn })
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
+    const [userId, setUserId] = useState(null);
 
     const handleSignUpClick = () => {
         navigate('/sign-up');
     };
     
+    useEffect(() => {
+        if (userId) {
+            navigate(`/user-page/${userId}`);
+        }
+    }, [userId, navigate]);
 
     const handleSignIn = (e) => {
         e.preventDefault();
@@ -24,8 +30,7 @@ function SignInPage({ setIsSignedIn })
                 // Signed in 
                 const user = userCredential.user;
                 setIsSignedIn(true);
-                // Go to UserPage
-                navigate('/user-page');
+                setUserId(user.uid);
             })
             .catch((error) => {
                 const errorCode = error.code;

@@ -7,7 +7,7 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import UserPage from './pages/UserPage';
 import ViewAlbum from './pages/ViewAlbum';
-import SearchPage from './pages/SearchPage';
+import SearchPage from './pages/SearchPage'
 
 
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
@@ -20,14 +20,13 @@ function App() {
   
 
 
-
   return (
     <div>
       <Routes>
         <Route path='/' element={<SignInPage setIsSignedIn={setIsSignedIn}/>} />
         <Route path='/sign-up' element={<SignUpPage setIsSignedIn={setIsSignedIn}/>} />
         <Route 
-          path='/user-page' 
+          path='/user-page/*' 
           element={isSignedIn ? <UserPage /> : <Navigate replace to='/' />}
           />
         <Route path='/search/' element={<SearchPage/>} />
@@ -43,22 +42,6 @@ function App() {
   )
 
 
-  /*
-  return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <header className="App-header">
-          <h1>Album Finder</h1>
-        </header>
-        <main>
-          <SearchAlbum />
-          <SearchUser />
-        </main>
-      </div>
-    </Router>
-  );
-  */
 }
 
 export default App;
