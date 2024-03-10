@@ -1,44 +1,37 @@
 import React, { useState } from 'react';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const SearchUser = () => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');         //state variables
     const [reviews, setReviews] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleSearch = async () => {
-        if (!searchTerm) return;
+        if (!searchTerm) return;      //return if search term is empty
+        setLoading(true);
     
-        const q = query(collection(db, "reviews"), where("usersId", "==", searchTerm));
+        const q = query(collection(db, "reviews"), where("usersId", "==", searchTerm)); //query to fetch reviews by userId
         const querySnapshot = await getDocs(q);
-        const fetchedReviews = [];
-        //const fetchedReviews = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        //setReviews(fetchedReviews);
-    
-    
+        const fetchedReviews = [];            //stores fetched reviews
 
-        for (const doc of querySnapshot.docs) {
-            const reviewData = doc.data();
-            const albumId = reviewData.albumsId;
+        for (const doc of querySnapshot.docs) {         //loops through each document
+            const reviewData = doc.data();              //gets review data from each document
+            const albumId = reviewData.albumsId;        //extracts the album id from review data
     
     
             if (albumId) {
-                const albumQuery = query(collection(db, "albums"), where("__name__", "==", albumId));
+                const albumQuery = query(collection(db, "albums"), where("__name__", "==", albumId));   //use album id to query and fetch the album data
                 const albumSnapshot = await getDocs(albumQuery);
                 const albumData = albumSnapshot.docs[0].data();
-                //const albumDoc  = await getDoc(doc(db, "albums", albumId));
-                //const albumData = albumDoc.data();
-                reviewData.album = albumData;
-                console.log("Test")
-                console.log("Fetched Album Data:", albumData);
+                reviewData.album = albumData;                     //attaches album to review data
             }
     
-            fetchedReviews.push({id: doc.id, ...reviewData });
+            fetchedReviews.push({id: doc.id, ...reviewData });  //adds review data to fectched reviews array
         }
 
     setReviews(fetchedReviews);
-
-
+    setLoading(false);
 };
 
 
@@ -51,6 +44,7 @@ const SearchUser = () => {
             placeholder={`Search by User`}
           />
           <button onClick={handleSearch}>Search</button>
+          {loading && <p>Loading...</p>}
           <div>
             {reviews.map(review => (
               <div key={review.id}>
@@ -70,13 +64,8 @@ const SearchUser = () => {
               </div>
             ))}
           </div>
-        </div>
-      );
-    };
+      </div>
+    );
+ };
 
-    
-    
 export default SearchUser;
-
-
-

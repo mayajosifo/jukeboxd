@@ -1,0 +1,67 @@
+
+
+.form .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+    
+.form .sign_up_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Adjust based on your preference */
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: adds shadow for depth */
+    border-radius: 10px; /* Optional: rounds the corners */
+}
+    
+.form .form_row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 20px;
+}
+    
+.form label {
+    
+    margin-right: 100px; /* Small space between label and input */
+}
+    
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"] {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Slightly rounded corners for the input fields */
+    margin-left: 50px;
+}
+    
+.form .signup_button {
+    margin-top: 20px; /* Extra space above the sign-up button */
+}
+    
+.form input[type="submit"] {
+    width: 100%;
+    padding: 15px 15px; /* Padding on top and bottom */
+    background-color: #e251be; /* A nice blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+    
+.form input[type="submit"]:hover {
+    background-color: #b3004e; /* A slightly darker blue for hover effect */
+}
+
+.form .error {
+    color: red;
+    margin-bottom: 10px;
+}
+    
