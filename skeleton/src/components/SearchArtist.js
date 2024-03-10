@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import './SearchArtist.css';
+import './SearchAlbum.css';
 import { db } from '../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
 const SearchAlbum = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchBy, setSearchBy] = useState('album');
+  const [searchBy, setSearchBy] = useState('artist');
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  console.log(searchBy)
 
   const handleSearch = async () => {
     if (!searchTerm) return;
@@ -29,7 +31,7 @@ const SearchAlbum = () => {
   };
 
   return (
-    <div className="search-album">
+    <div className="search-artist">
 
       <div className="input-and-button">
         <input

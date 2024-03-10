@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { db } from '../config/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import './SearchUser.css';
 
 const SearchUser = () => {
     const [searchTerm, setSearchTerm] = useState('');         //state variables
@@ -36,15 +37,17 @@ const SearchUser = () => {
 
 
     return (
-      <div>
-        <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder={`Search by User`}
-          />
-          <button onClick={handleSearch}>Search</button>
-          {loading && <p>Loading...</p>}
+      <div className='search-user'>
+        <div className="input-and-button">
+          <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder={`Search by User`}
+            />
+            <button onClick={handleSearch}>Search</button>
+            {loading && <p>Loading...</p>}
+          </div>
           <div>
             {reviews.map(review => (
               <div key={review.id}>
