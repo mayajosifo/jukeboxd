@@ -1,44 +1,81 @@
-import React, { useState } from 'react';
-import { collection, doc, deleteDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
+import { collection, doc, deleteDoc, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase'; 
+import Swal from 'sweetalert2';
 
-function deleteReview(){
-    const [userId, setUserId] = useState('');
+function DeleteReview() {
+  const [userId, setUserId] = useState('');
+  const [reviews, setReviews] = useState([]);
+  const [reviewIdToDelete, setReviewIdToDelete] = useState('');
 
-    const handleDelete = async() => {
-       
-            const reviewToDelete = await doc(db, 'reviews', userId);
-    
-            try {
-                if (reviewToDelete.exists){
-                    await deleteDoc(reviewToDelete);
-     
-                 }
+  const getReviews = async () => {
+    const querySnapshot = await getDocs(collection(db, 'reviews'));
+    const reviews = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setReviews(reviews);
+  };
 
-                console.log('Review deleted successfully');
-                setUserId('');
+  useEffect(() => {
+    getReviews();
+  }, []);
 
-            } catch (error) {
-                console.error('Review does not exist:', error); 
-            }
-    
-    };
+  const handleDelete = () => {
+    if (!reviewIdToDelete) {
+      // Display an error message or handle the case where the input is empty
+      return;
+    }
 
+    const id = reviewIdToDelete;
 
-    return(
-        <form onSubmit={handleDelete}>
-            <h2>Delete User Review</h2>
-            <label>
-                Review ID:
-                <input type="text" value={id} onChange={e => setUserId(e.target.value)} />
-            </label>
-            <br />
-        </form>
-    
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then(result => {
+      if (result.value) {
+        const [selectedReview] = reviews.filter(review => review.id === id);
+
+        if (selectedReview) {
+          // Only proceed if selectedReview is defined
+          deleteDoc(doc(db, 'reviews', selectedReview.id));
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+
+          const reviewsCopy = reviews.filter(review => review.id !== id);
+          setReviews(reviewsCopy);
+          setReviewIdToDelete(''); // Clear the input after successful deletion
+        } else {
+          // Handle the case when no matching review is found
+          console.error('No review found with the given ID:', id);
+        }
+      }
+    });
+  };
+
+    return (
+      <div>
+        <h1>Delete Review</h1>
+        <label>
+          Enter Review ID:
+          <input
+            type="text"
+            value={reviewIdToDelete}
+            onChange={e => setReviewIdToDelete(e.target.value)}
+          />
+        </label>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
     );
 
 }
 
-export default deleteReview;
+export default DeleteReview;
     
 
