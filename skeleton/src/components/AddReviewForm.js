@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../config/firebase'; 
 
-function AddReviewForm({ onClose, albumId }){
+function AddReviewForm({ onClose, albumId, userId }){
     const [albumsId, setAlbumsId] = useState('');
     const [rating, setRating] = useState('');
     const [reviewText, setReviewText] = useState('');
-    const [usersId, setUsersId] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents the default form submission action
@@ -24,20 +23,19 @@ function AddReviewForm({ onClose, albumId }){
                 albumsId: albumId, // use albumId prop here
                 rating: numericRating,
                 reviewText: reviewText,
-                usersId: usersId,
+                usersId: userId,
                 reviewDate: new Date() // Adds a timestamp
             });
     
             console.log('Review added successfully', docRef.id);
     
             // Add the same review document to the "userReviews" subcollection of the specific user
-            await addDoc(collection(db, "users", usersId, "userReviews"), {
+            await addDoc(collection(db, "users", userId, "userReviews"), {
                 reviewId: docRef.id, // Store the ID of the review from the "reviews" collection
                 albumsId: albumId, // use albumId prop here
                 rating: numericRating,
                 reviewText: reviewText,
-                usersId: usersId,
-                reviewDate: new Date() // A
+                reviewDate: new Date() // Adds a timestamp
             });
 
             await addDoc(collection(db, "albums", albumId, "albumReviews"), {
@@ -45,7 +43,7 @@ function AddReviewForm({ onClose, albumId }){
                 albumsId: albumId, // use albumId prop here
                 rating: numericRating,
                 reviewText: reviewText,
-                usersId: usersId,
+                usersId: userId,
                 reviewDate: new Date() // A
             });
     
@@ -55,7 +53,6 @@ function AddReviewForm({ onClose, albumId }){
             setAlbumsId('');
             setRating(''); 
             setReviewText('');
-            setUsersId('');
         } catch (error) {
             console.error('Error adding review:', error);
         }
@@ -81,12 +78,6 @@ function AddReviewForm({ onClose, albumId }){
             <label>
                 Review Text:
                 <textarea value={reviewText} onChange={e => setReviewText(e.target.value)} />
-            </label>
-            <br />
-            <label>
-                {/* NOTE: wont be used in final version*/}
-                User ID:
-                <input type="text" value={usersId} onChange={e => setUsersId(e.target.value)} />
             </label>
             <br />
             {/* a button of submit type will trigger onSubmit :)*/}

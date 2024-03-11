@@ -51,7 +51,7 @@ function ViewAlbum({userId}) {
         <div>
             <h1>Album Review Page</h1>
             <button onClick={handleButtonClick}>Add Review</button>
-            {showReview && <AddReviewForm onClose={handleCloseForm} albumId={albumId} />}
+            {showReview && <AddReviewForm onClose={handleCloseForm} albumId={albumId} userId={userId}/>}
             {album && (
                 <div>
                     <h2>Name: {album.albumName}</h2>
