@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div>
-      <Navbar userId={userId}/>
+      {isSignedIn && <Navbar userId={userId}/>}
       <Routes>
         <Route path='/' element={<SignInPage setIsSignedIn={setIsSignedIn} setUserId={setUserId}/>} />
         <Route path='/sign-up' element={<SignUpPage setIsSignedIn={setIsSignedIn} setUserId={setUserId}/>} />
