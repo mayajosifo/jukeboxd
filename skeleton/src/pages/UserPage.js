@@ -12,7 +12,6 @@ function userPage({userId}) {
 
     return (
           <div className="App">
-            <Navbar userId={userId}/>
             <header className="App-header">
               <h1>Album Finder</h1>
             </header>
