@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import Review from '../components/Review'; // Assuming you have a Review component
+import Review from '../components/Review';
+import UserListDropdown from '../components/UserDropdown';
 
 function UserPage({ userId }) {
   const [user, setUser] = useState(null);
@@ -49,7 +50,11 @@ function UserPage({ userId }) {
       <main>
         {user && (
           <div>
-            <h1>Username: {user.userName}</h1>
+            <h1>Welcome Back, {user.userName}</h1>
+            <div className="user-counts">
+                <UserListDropdown title="Followers" userList={user.followersList || []} />
+                <UserListDropdown title="Following" userList={user.followingList || []} />
+            </div>
           </div>
         )}
         <div className="reviews-grid">
