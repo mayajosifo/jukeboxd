@@ -1,0 +1,39 @@
+.user-list-dropdown {
+    position: relative; /* This ensures the dropdown content is positioned relative to this container */
+    border: 1px solid #ddd; /* Example border, you can customize */
+    padding: 10px;
+    width: 200px; /* Set the width as needed */
+}
+
+.dropdown-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left; /* Aligns the text to the left */
+    width: 100%; /* Makes it fill the container */
+    padding: 10px 0; /* Add some padding */
+}
+
+.dropdown-content {
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    overflow-y: auto; /* Makes the dropdown scrollable */
+    max-height: 200px; /* Adjust this value to control the maximum height before scrolling */
+    z-index: 1; /* Ensures dropdown appears above other content */
+}
+
+.dropdown-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Adds a separator between items */
+    cursor: pointer;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none; /* Removes the border from the last item */
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}

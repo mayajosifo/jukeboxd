@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import './UserDropdown.css';
 
-const UserListDropdown = ({ title, userList }) => {
+const UserDropdown = ({ title, userList }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     return (
         <div className="user-list-dropdown">
-            <button onClick={toggleDropdown} className="dropdown-button">
+            <div onClick={toggleDropdown} className="dropdown-button">
                 {title} ({userList.length})
-            </button>
+            </div>
             {isOpen && (
                 <div className="dropdown-content">
                     {userList.length ? (
@@ -26,5 +27,4 @@ const UserListDropdown = ({ title, userList }) => {
         </div>
     );
 };
-
-export default UserListDropdown;
+export default UserDropdown;
