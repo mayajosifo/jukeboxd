@@ -1,60 +1,64 @@
 import React, { useState } from 'react';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import './SearchUser.css';
 import Review from './Review';
 import FollowUser from './FollowUser'; // Import the FollowUser component
 import { Link } from 'react-router-dom';
 
-const SearchUser = ({ userId }) => { // This is the current user's userId
-    console.log(userId)
-    const [searchTerm, setSearchTerm] = useState('');
-    const [reviews, setReviews] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [userName, setUserName] = useState(''); // State to store the searched user's name
+const SearchUser = ({userId}) => {
+  const [searchTerm, setSearchTerm] = useState('');         //state variables
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState(''); // State to store the searched user's name
+  const [searchedUserId, setSearchedUserId] = useState(''); // State to store the ID of the searched user
 
-    const [searchedUserId, setSearchedUserId] = useState(''); // Changed from userId to searchedUserId
 
-    const handleSearch = async () => {
-        if (!searchTerm) return;
-        setLoading(true);
+  const handleSearch = async () => {
+    if (!searchTerm) return;      //return if search term is empty
+    setLoading(true);
 
-        const usersRef = collection(db, "users");
-        const userQuery = query(usersRef, where("userName", "==", searchTerm));
-        const userSnapshot = await getDocs(userQuery);
 
-        if (!userSnapshot.empty) {
-            const userData = userSnapshot.docs[0].data();
-            const searchID = userSnapshot.docs[0].id;
-            setUserName(userData.userName); // Set the userName state
-            setSearchedUserId(searchID); // Changed from setUserId to setSearchedUserId
+    const usersRef = collection(db, "users");
+    const userQuery = query(usersRef, where("userName", "==", searchTerm));
+    const userSnapshot = await getDocs(userQuery);
+      
 
-            console.log(searchID)
 
-            const q = query(collection(db, "reviews"), where("usersId", "==", searchID));
-            const querySnapshot = await getDocs(q);
-            const fetchedReviews = [];
+    if (!userSnapshot.empty){
+      const firstDoc = userSnapshot.docs[0];
+      setUser(firstDoc.data());
+      setUserName(firstDoc.data().userName); // Set the userName state
+      setSearchedUserId(firstDoc.id); // Set the searchedUserId state
 
-            for (const doc of querySnapshot.docs) {
-                const reviewData = doc.data();
-                const albumId = reviewData.albumsId;
+      const userId = firstDoc.id;
 
-                if (albumId) {
-                    const albumQuery = query(collection(db, "albums"), where("__name__", "==", albumId));
-                    const albumSnapshot = await getDocs(albumQuery);
-                    const albumData = albumSnapshot.docs[0].data();
-                    reviewData.album = albumData;
-                }
+        
+      const userReviewsRef = collection(db, 'users', userId, 'userReviews');
+      const userReviewsSnapshot = await getDocs(userReviewsRef);
+      const reviewsWithAlbums = [];
 
-                fetchedReviews.push({ id: doc.id, ...reviewData, userName }); // userName still represents the searched user's name
-            }
+      for (const reviewDoc of userReviewsSnapshot.docs) {
+          const reviewData = reviewDoc.data();
+          const albumId = reviewData.albumsId;
+          
+          if (albumId) {
+              const albumDocRef = doc(db, 'albums', albumId);
+              const albumSnapshot = await getDoc(albumDocRef);
+              if (albumSnapshot.exists()) {
+                  reviewData.album = { id: albumId, ...albumSnapshot.data() }; // Add the album data to the review object
+              }
+          }
+          reviewsWithAlbums.push({ id: reviewDoc.id, ...reviewData });
+      }
 
-            setReviews(fetchedReviews);
-        } else {
-            setReviews([]);
-        }
-        setLoading(false);
-    };
+      setReviews(reviewsWithAlbums);
+    
+    }
+
+    setLoading(false);
+  }; 
 
     return (
       <div className='search-user'>
