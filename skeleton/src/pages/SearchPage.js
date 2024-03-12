@@ -22,7 +22,7 @@ const SearchPage = ({userId}) => {
 
       {searchBy === 'album' ? <SearchAlbum searchByProp={searchBy} /> :
         searchBy === 'artist' ? <SearchArtist searchByProp={searchBy} /> :
-        <SearchUser />}
+        <SearchUser userId={userId} />}
     </div>
   );
 }
