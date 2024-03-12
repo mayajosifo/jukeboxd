@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { db } from '../config/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import './SearchUser.css';
+import Review from './Review';
 import { Link } from 'react-router-dom';
 
 const SearchUser = () => {
@@ -18,7 +19,11 @@ const SearchUser = () => {
         const userSnapshot = await getDocs(userQuery);
 
         if (!userSnapshot.empty){
+          const userData = userSnapshot.docs[0].data(); // Assuming each username is unique
           const searchID = userSnapshot.docs[0].id;
+          const userName = userData.userName; // Extract the userName
+
+
           console.log(searchID)
 
           const q = query(collection(db, "reviews"), where("usersId", "==", searchID)); //query to fetch reviews by userId
@@ -37,7 +42,7 @@ const SearchUser = () => {
                   reviewData.album = albumData;                     //attaches album to review data
               }
       
-              fetchedReviews.push({id: doc.id, ...reviewData });  //adds review data to fectched reviews array
+              fetchedReviews.push({ id: doc.id, ...reviewData, userName });  //adds review data to fectched reviews array
           }
 
           setReviews(fetchedReviews);
@@ -61,24 +66,11 @@ const SearchUser = () => {
             <button onClick={handleSearch}>Search</button>
             {loading && <p>Loading...</p>}
           </div>
-          <div className="albums-container">
+          <div className="reviews-container">
             {reviews.map(review => (
-              <div key={review.id}>
-                <h1>Rating: {review.rating}/10</h1>
-                <h2>Review: {review.reviewText} </h2>
-                {review.album && (
-                    <div>
-                        <p>Album Name: {review.album.albumName}</p>
-                        <p>Artist Name: {review.album.artistName}</p>
-                        <Link to={`/album/${review.album.id}`}> 
-                          {review.album.coverUrl && <img src={review.album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
-                        </Link>
-                        <p>Year: {review.album.releaseYear}</p>
-                    </div>
-                )}
-              </div>
+                <Review key={review.id} review={review} userName={review.userName}/>
             ))}
-          </div>
+        </div>
       </div>
     );
  };
