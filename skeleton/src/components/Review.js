@@ -5,10 +5,17 @@ import './Review.css'; // Importing the CSS file
 const Review = ({ review, userName }) => { 
     return (
         <div className="review-container">
-            {review.album && review.album.coverUrl && (
-                <div className="album-cover-container">
-                    <Link to={`/album/${review.album.id}`}>
-                        <img src={review.album.coverUrl} alt="Album Cover" className="album-cover"/>
+            {review.album && (
+                <div className="album-info-container">
+                    {review.album.coverUrl && (
+                        <div className="album-cover-container">
+                            <Link to={`/album/${review.album.id}`}>
+                                <img src={review.album.coverUrl} alt="Album Cover" className="album-cover"/>
+                            </Link>
+                        </div>
+                    )}
+                    <Link to={`/album/${review.album.id}`} className="album-title-link">
+                        <h4 className="album-title">{review.album.albumName}</h4> {/* Added album title */}
                     </Link>
                 </div>
             )}
