@@ -1,10 +1,10 @@
-
 import AddReviewForm from '../components/AddReviewForm';
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { collection, doc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import styles from './ViewAlbum.module.css';
+import Review from '../components/Review'
 
 
 function ViewAlbum({userId}) {
@@ -19,7 +19,6 @@ function ViewAlbum({userId}) {
     useEffect(() => {
         // Set the albumId state variable when the component mounts
         const fetchAlbumAndReviews = async () => {
-
             const albumDoc = doc(db, 'albums', id);
             const albumSnapshot = await getDoc(albumDoc);
             if (albumSnapshot.exists()) {
@@ -27,16 +26,28 @@ function ViewAlbum({userId}) {
             } else {
                 console.log('Album not found');
             }
-
+    
             const q = query(collection(db, "reviews"), where("albumsId", "==", id));
             const querySnapshot = await getDocs(q);
-            const fetchedReviews = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const fetchedReviews = [];
+    
+            // Use Promise.all to execute all asynchronous operations concurrently
+            await Promise.all(querySnapshot.docs.map(async reviewDoc => {
+                const reviewData = { id: reviewDoc.id, ...reviewDoc.data() };
+                const userDoc = await getDoc(doc(db, 'users', reviewData.usersId));
+                const userData = userDoc.exists() ? userDoc.data() : null;
+                const userName = userData ? userData.userName : 'Unknown';
+                fetchedReviews.push({ ...reviewData, userName });
+            }));
+    
             setReviews(fetchedReviews);
             setAlbumId(id);
         };
-
+    
         fetchAlbumAndReviews();
-    }, [id]);                       
+    }, [id]);
+    
+                     
 
     const handleButtonClick = () => {
         setShowReview(true);
@@ -60,17 +71,13 @@ function ViewAlbum({userId}) {
                     <p>Year: {album.releaseYear}</p>
                 </div>
             )}
-            <h2>Reviews: </h2>
+            <h2>Reviews:</h2>
             <div className={styles.reviewsContainer}>
                 {reviews.map(review => (
-                    <div key={review.id} className={styles.reviewItem}>
-                        <h3>User ID: {review.usersId}</h3>
-                        <p>Rating: {review.rating}</p>
-                        <p>Review: {review.reviewText}</p>
-                    </div>
+                    <Review key={review.id} review={review} userName={review.userName} />
                 ))}
             </div>
         </div>
     );
 }
-export default ViewAlbum
+export default ViewAlbum 
