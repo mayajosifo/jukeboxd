@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, doc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import styles from './ViewAlbum.module.css';
+import AlbumAverageRating from '../components/AlbumAverageRating';
 import Review from '../components/Review'
 
 
@@ -71,6 +72,7 @@ function ViewAlbum({userId}) {
                     <p>Year: {album.releaseYear}</p>
                 </div>
             )}
+            <AlbumAverageRating reviews={reviews} />
             <h2>Reviews:</h2>
             <div className={styles.reviewsContainer}>
                 {reviews.map(review => (
