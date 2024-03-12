@@ -12,29 +12,41 @@ const SearchUser = () => {
     const handleSearch = async () => {
         if (!searchTerm) return;      //return if search term is empty
         setLoading(true);
-    
-        const q = query(collection(db, "reviews"), where("usersId", "==", searchTerm)); //query to fetch reviews by userId
-        const querySnapshot = await getDocs(q);
-        const fetchedReviews = [];            //stores fetched reviews
 
-        for (const doc of querySnapshot.docs) {         //loops through each document
-            const reviewData = doc.data();              //gets review data from each document
-            const albumId = reviewData.albumsId;        //extracts the album id from review data
-    
-    
-            if (albumId) {
-                const albumQuery = query(collection(db, "albums"), where("__name__", "==", albumId));   //use album id to query and fetch the album data
-                const albumSnapshot = await getDocs(albumQuery);
-                const albumData = albumSnapshot.docs[0].data();
-                reviewData.album = albumData;                     //attaches album to review data
-            }
-    
-            fetchedReviews.push({id: doc.id, ...reviewData });  //adds review data to fectched reviews array
+        const usersRef = collection(db, "users");
+        const userQuery = query(usersRef, where("userName", "==", searchTerm));
+        const userSnapshot = await getDocs(userQuery);
+
+        if (!userSnapshot.empty){
+          const searchID = userSnapshot.docs[0].id;
+          console.log(searchID)
+
+          const q = query(collection(db, "reviews"), where("usersId", "==", searchID)); //query to fetch reviews by userId
+          const querySnapshot = await getDocs(q);
+          const fetchedReviews = [];            //stores fetched reviews
+
+          for (const doc of querySnapshot.docs) {         //loops through each document
+              const reviewData = doc.data();              //gets review data from each document
+              const albumId = reviewData.albumsId;        //extracts the album id from review data
+      
+      
+              if (albumId) {
+                  const albumQuery = query(collection(db, "albums"), where("__name__", "==", albumId));   //use album id to query and fetch the album data
+                  const albumSnapshot = await getDocs(albumQuery);
+                  const albumData = albumSnapshot.docs[0].data();
+                  reviewData.album = albumData;                     //attaches album to review data
+              }
+      
+              fetchedReviews.push({id: doc.id, ...reviewData });  //adds review data to fectched reviews array
+          }
+
+          setReviews(fetchedReviews);
         }
-
-    setReviews(fetchedReviews);
-    setLoading(false);
-};
+        else {
+          setReviews([]);
+        }
+      setLoading(false);
+    };  
 
 
     return (
@@ -44,7 +56,7 @@ const SearchUser = () => {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={`Search by User`}
+              placeholder={`Search by Username`}
             />
             <button onClick={handleSearch}>Search</button>
             {loading && <p>Loading...</p>}
