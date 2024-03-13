@@ -13,7 +13,7 @@ function SignUpPage( { setIsSignedIn, setUserId })
 
     const handleSignUp = (e) => {
         e.preventDefault();
-        // Check if username alreadu taken
+        // Check if username already taken
         validateUsername(newUsername)
             .then(valid => {
                 if (valid) {
@@ -24,10 +24,10 @@ function SignUpPage( { setIsSignedIn, setUserId })
                             // Create new Document in users Collection in Firestore
                             newUserDoc(user.uid, newUsername, newEmail)
                                 .then(() => {
-                                    console.log('New user created')
+                                    //console.log('New user created')
                                     setIsSignedIn(true);
                                     setUserId(user.uid);
-                                    navigate('/user-page');
+                                    navigate(`/user-page/${user.uid}`);
                                 })
                                 .catch((error) => {
                                     console.error('Error creating new user:', error)

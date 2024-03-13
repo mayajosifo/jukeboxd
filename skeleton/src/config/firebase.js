@@ -38,8 +38,9 @@ export const newUserDoc = (userId, username, email) => {
     {
         dateJoined: Timestamp.fromDate(new Date()),
         email: email,
-        followersList: [],
-        followingList: [],
+        followersList:   [],
+        followingList:   [],
+        likedAlbumsList: [],
         userName: username
     });
 };

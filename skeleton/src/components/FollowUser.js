@@ -1,14 +1,19 @@
 import React from 'react';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../config/firebase'; 
+import { useState } from 'react';
 
 function FollowUser({ currentUserId, otherUserId }) {
 
+    const [followButtonName, setFollowButtonName] = useState("Follow")
+
     const handleFollow = async () => {
         if (currentUserId === otherUserId) {
-            alert('You cannot follow yourself.');
+            setFollowButtonName('You cannot follow yourself.');
             return; 
         }
+
+        setFollowButtonName("Followed!")
 
         const currentUserRef = doc(db, "users", currentUserId);
         const otherUserRef = doc(db, "users", otherUserId);
@@ -28,7 +33,7 @@ function FollowUser({ currentUserId, otherUserId }) {
         }
     };
 
-    return <button onClick={handleFollow}>Follow</button>;
+    return <button onClick={handleFollow}>{followButtonName}</button>;
 }
 
 export default FollowUser;

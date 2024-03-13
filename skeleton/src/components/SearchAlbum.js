@@ -3,8 +3,12 @@ import './SearchArtist.css';
 import { db } from '../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
+import LikeAlbum from './LikeAlbum';
 
-const SearchAlbum = () => {
+const SearchAlbum = ( {tempsearchBy, userId} ) => {
+
+  console.log("searchalbum user id:", userId)
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchBy, setSearchBy] = useState('album');
   const [albums, setAlbums] = useState([]);
@@ -46,9 +50,10 @@ const SearchAlbum = () => {
         {albums.map(album => (
           <div className="album-item" key={album.id}>
             <h3>{album.albumName}</h3>
+            <LikeAlbum albumId={album.id} userId={userId}/> 
             <p>Artist: {album.artistName}</p>
             <Link to={`/album/${album.id}`}> 
-              {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
+            {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
             </Link>
             <p>Year: {album.releaseYear}</p>
           </div>

@@ -1,3 +1,15 @@
+
+
+
+
+// DELETE THIS .JS/.CSS FILE AND MERGE IT WITH SEARCHALBUM
+
+
+
+
+
+
+
 import React, { useState } from 'react';
 import './SearchAlbum.css';
 import { db } from '../config/firebase'; 

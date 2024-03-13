@@ -60,3 +60,8 @@ body, html, #root, .App {
   border-radius: 5px;
   margin-top: 10px;
 }
+
+.album-item:hover {
+  border-color: #333;
+  background-color: #e0e0e0;
+}
