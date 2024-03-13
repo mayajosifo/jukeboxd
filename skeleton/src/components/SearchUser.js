@@ -16,49 +16,52 @@ const SearchUser = ({userId}) => {
 
 
   const handleSearch = async () => {
-    if (!searchTerm) return;      //return if search term is empty
+    if (!searchTerm) return; // Return if search term is empty
     setLoading(true);
-
 
     const usersRef = collection(db, "users");
     const userQuery = query(usersRef, where("userName", "==", searchTerm));
     const userSnapshot = await getDocs(userQuery);
-      
 
+    if (!userSnapshot.empty) {
+        const firstDoc = userSnapshot.docs[0];
+        const newUserName = firstDoc.data().userName; // Temporarily store new user name
+        const newUserId = firstDoc.id; // Temporarily store new user ID
+        setUser(firstDoc.data());
 
-    if (!userSnapshot.empty){
-      const firstDoc = userSnapshot.docs[0];
-      setUser(firstDoc.data());
-      setUserName(firstDoc.data().userName); // Set the userName state
-      setSearchedUserId(firstDoc.id); // Set the searchedUserId state
+        const userReviewsRef = collection(db, 'users', newUserId, 'userReviews');
+        const userReviewsSnapshot = await getDocs(userReviewsRef);
+        const reviewsWithAlbums = [];
 
-      const userId = firstDoc.id;
+        for (const reviewDoc of userReviewsSnapshot.docs) {
+            const reviewData = reviewDoc.data();
+            const albumId = reviewData.albumsId;
+            
+            if (albumId) {
+                const albumDocRef = doc(db, 'albums', albumId);
+                const albumSnapshot = await getDoc(albumDocRef);
+                if (albumSnapshot.exists()) {
+                    reviewData.album = { id: albumId, ...albumSnapshot.data() }; // Add the album data to the review object
+                }
+            }
+            reviewsWithAlbums.push({ id: reviewDoc.id, ...reviewData, userName: newUserName }); // Include userName here
+        }
 
-        
-      const userReviewsRef = collection(db, 'users', userId, 'userReviews');
-      const userReviewsSnapshot = await getDocs(userReviewsRef);
-      const reviewsWithAlbums = [];
-
-      for (const reviewDoc of userReviewsSnapshot.docs) {
-          const reviewData = reviewDoc.data();
-          const albumId = reviewData.albumsId;
-          
-          if (albumId) {
-              const albumDocRef = doc(db, 'albums', albumId);
-              const albumSnapshot = await getDoc(albumDocRef);
-              if (albumSnapshot.exists()) {
-                  reviewData.album = { id: albumId, ...albumSnapshot.data() }; // Add the album data to the review object
-              }
-          }
-          reviewsWithAlbums.push({ id: reviewDoc.id, ...reviewData });
-      }
-
-      setReviews(reviewsWithAlbums);
-    
+        // Now update all related states together
+        setUserName(newUserName);
+        setSearchedUserId(newUserId);
+        setReviews(reviewsWithAlbums);
+    } else {
+        // Reset everything if no user is found
+        setUser(null);
+        setUserName('');
+        setSearchedUserId('');
+        setReviews([]);
     }
 
     setLoading(false);
-  }; 
+};
+
 
     return (
       <div className='search-user'>
