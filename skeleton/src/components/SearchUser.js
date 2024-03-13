@@ -1,57 +1,66 @@
 import React, { useState } from 'react';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import './SearchUser.css';
 import Review from './Review';
+import FollowUser from './FollowUser'; // Import the FollowUser component
 import { Link } from 'react-router-dom';
 
-const SearchUser = () => {
-    const [searchTerm, setSearchTerm] = useState('');         //state variables
-    const [reviews, setReviews] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    const handleSearch = async () => {
-        if (!searchTerm) return;      //return if search term is empty
-        setLoading(true);
-
-        const usersRef = collection(db, "users");
-        const userQuery = query(usersRef, where("userName", "==", searchTerm));
-        const userSnapshot = await getDocs(userQuery);
-
-        if (!userSnapshot.empty){
-          const userData = userSnapshot.docs[0].data(); // Assuming each username is unique
-          const searchID = userSnapshot.docs[0].id;
-          const userName = userData.userName; // Extract the userName
+const SearchUser = ({userId}) => {
+  const [searchTerm, setSearchTerm] = useState('');         //state variables
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState(''); // State to store the searched user's name
+  const [searchedUserId, setSearchedUserId] = useState(''); // State to store the ID of the searched user
 
 
-          console.log(searchID)
+  const handleSearch = async () => {
+    if (!searchTerm) return; // Return if search term is empty
+    setLoading(true);
 
-          const q = query(collection(db, "reviews"), where("usersId", "==", searchID)); //query to fetch reviews by userId
-          const querySnapshot = await getDocs(q);
-          const fetchedReviews = [];            //stores fetched reviews
+    const usersRef = collection(db, "users");
+    const userQuery = query(usersRef, where("userName", "==", searchTerm));
+    const userSnapshot = await getDocs(userQuery);
 
-          for (const doc of querySnapshot.docs) {         //loops through each document
-              const reviewData = doc.data();              //gets review data from each document
-              const albumId = reviewData.albumsId;        //extracts the album id from review data
-      
-      
-              if (albumId) {
-                  const albumQuery = query(collection(db, "albums"), where("__name__", "==", albumId));   //use album id to query and fetch the album data
-                  const albumSnapshot = await getDocs(albumQuery);
-                  const albumData = albumSnapshot.docs[0].data();
-                  reviewData.album = albumData;                     //attaches album to review data
-              }
-      
-              fetchedReviews.push({ id: doc.id, ...reviewData, userName });  //adds review data to fectched reviews array
-          }
+    if (!userSnapshot.empty) {
+        const firstDoc = userSnapshot.docs[0];
+        const newUserName = firstDoc.data().userName; // Temporarily store new user name
+        const newUserId = firstDoc.id; // Temporarily store new user ID
+        setUser(firstDoc.data());
 
-          setReviews(fetchedReviews);
+        const userReviewsRef = collection(db, 'users', newUserId, 'userReviews');
+        const userReviewsSnapshot = await getDocs(userReviewsRef);
+        const reviewsWithAlbums = [];
+
+        for (const reviewDoc of userReviewsSnapshot.docs) {
+            const reviewData = reviewDoc.data();
+            const albumId = reviewData.albumsId;
+            
+            if (albumId) {
+                const albumDocRef = doc(db, 'albums', albumId);
+                const albumSnapshot = await getDoc(albumDocRef);
+                if (albumSnapshot.exists()) {
+                    reviewData.album = { id: albumId, ...albumSnapshot.data() }; // Add the album data to the review object
+                }
+            }
+            reviewsWithAlbums.push({ id: reviewDoc.id, ...reviewData, userName: newUserName }); // Include userName here
         }
-        else {
-          setReviews([]);
-        }
-      setLoading(false);
-    };  
+
+        // Now update all related states together
+        setUserName(newUserName);
+        setSearchedUserId(newUserId);
+        setReviews(reviewsWithAlbums);
+    } else {
+        // Reset everything if no user is found
+        setUser(null);
+        setUserName('');
+        setSearchedUserId('');
+        setReviews([]);
+    }
+
+    setLoading(false);
+};
 
 
     return (
@@ -61,18 +70,24 @@ const SearchUser = () => {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={`Search by Username`}
+              placeholder="Search by Username"
             />
             <button onClick={handleSearch}>Search</button>
             {loading && <p>Loading...</p>}
-          </div>
-          <div className="reviews-container">
+        </div>
+        {userName && (
+            <div className="user-reviews-header">
+                <h2>{userName}'s reviews</h2>
+                <FollowUser currentUserId={userId} otherUserId={searchedUserId} /> 
+            </div>
+        )}
+        <div className="reviews-container">
             {reviews.map(review => (
                 <Review key={review.id} review={review} userName={review.userName}/>
             ))}
         </div>
       </div>
     );
- };
+};
 
 export default SearchUser;
