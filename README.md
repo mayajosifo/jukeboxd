@@ -19,6 +19,8 @@ Welcome to Jukeboxd! Jukeboxd is an album review site where you can post your ra
    - cd src
 3. Install dependencies
    - npm install
+  
+
 **Backend:**
 1. To store review and follower data, you will need to set up a firestore server.
 2. Once you have a firebase configuration, create a .env file. It should look like this:
