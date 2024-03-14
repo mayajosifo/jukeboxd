@@ -20,6 +20,8 @@
 
 .review-content {
     flex: 1;
+    min-width: 6in;
+    max-width: 6in;
 }
 
 .review-content h3 {
