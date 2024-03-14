@@ -60,36 +60,38 @@ function ViewAlbum({userId}) {
 
 
     return (
-        <div>
-        <h1 style={{textAlign: 'center'}}>Album Review Page</h1>
-        {album && (
-            <div className='album-container' style={{ marginLeft: '40px' }}>
-                {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
-                <div className='album-info'>
-                    <h2>Name: {album.albumName}</h2>
-                    <p>Artist: {album.artistName}</p>
-                    <p>Year: {album.releaseYear}</p>
-                </div>
+<div className='page-container'>
+    <h1 style={{textAlign: 'center'}}>Album Review Page</h1>
+    {album && (
+        <div className='album-container' style={{ marginLeft: '40px' }}>
+            {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
+            <div className='album-info'>
+                <h2>Name: {album.albumName}</h2>
+                <p>Artist: {album.artistName}</p>
+                <p>Year: {album.releaseYear}</p>
             </div>
-        )}
-        <div style={{ marginLeft: '40px' }}>
-            <AlbumAverageRating reviews={reviews} />
         </div>
-        <div style={{ marginLeft: '40px' }}>
-            <button onClick={handleButtonClick}>Add Review</button>
-        </div>
-        {showReview && <AddReviewForm onClose={handleCloseForm} albumId={albumId} userId={userId}/>}
-        <div style={{ marginLeft: '40px' }}>
-            <h2>Reviews:</h2>
-        </div>
-        <div className={styles.reviewsContainer} style={{ marginLeft: '40px' }}>
-            {reviews.map(review => (
-                <div key={review.id} style={{ marginRight: '40px', marginBottom: '40px' }}>
-                    <Review review={review} userName={review.userName} />
-                </div>
-            ))}
-        </div>
+    )}
+    <div style={{ marginLeft: '40px' }}>
+        <AlbumAverageRating reviews={reviews} />
     </div>
+    <div style={{ marginLeft: '40px' }}>
+        <button onClick={handleButtonClick}>Add Review</button>
+    </div>
+    {showReview && <AddReviewForm onClose={handleCloseForm} albumId={albumId} userId={userId}/>}
+    <div style={{ marginLeft: '40px' }}>
+        <h2>Reviews:</h2>
+    </div>
+    <div className={styles.reviewsContainer} style={{ marginLeft: '40px' }}>
+        {reviews.map(review => (
+            <div key={review.id} style={{ marginRight: '40px', marginBottom: '40px' }}>
+                <Review review={review} userName={review.userName} />
+            </div>
+        ))}
+    </div>
+</div>
+
+
     
 
     );

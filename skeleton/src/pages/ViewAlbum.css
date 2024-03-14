@@ -1,3 +1,6 @@
+.page-container {
+    margin-left: 20px;
+}
 
 .form .container {
     display: flex;
@@ -13,5 +16,5 @@
 }
 
 .album-info {
-    margin-left: 10px; /* Adjust this value as needed */
+    margin-left: 10px;
 }
