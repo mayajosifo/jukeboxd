@@ -15,7 +15,7 @@ function ViewAlbum({userId}) {
     const [reviews, setReviews] = useState([]);
 
     const { id } = useParams(); 
-    console.log(id)
+    //console.log(id)
 
     useEffect(() => {
         // Set the albumId state variable when the component mounts
@@ -25,7 +25,7 @@ function ViewAlbum({userId}) {
             if (albumSnapshot.exists()) {
                 setAlbum(albumSnapshot.data());
             } else {
-                console.log('Album not found');
+                console.error('Album not found');
             }
     
             const q = query(collection(db, "reviews"), where("albumsId", "==", id));

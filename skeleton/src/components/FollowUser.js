@@ -27,7 +27,7 @@ function FollowUser({ currentUserId, otherUserId }) {
                 followersList: arrayUnion(currentUserId)
             });
 
-            console.log('Follow successful');
+            //console.log('Follow successful');
         } catch (error) {
             console.error('Error following user: ', error);
         }

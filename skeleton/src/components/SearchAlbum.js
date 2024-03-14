@@ -7,7 +7,7 @@ import LikeAlbum from './LikeAlbum';
 
 const SearchAlbum = ( {searchBy, userId} ) => {
 
-  console.log("searchalbum user id:", userId)
+  //console.log("searchalbum user id:", userId)
 
   const [searchTerm, setSearchTerm] = useState('');
   //const [searchBy, setSearchBy] = useState('album');
