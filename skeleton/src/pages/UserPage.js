@@ -4,6 +4,7 @@ import { db } from '../config/firebase';
 import Review from '../components/Review';
 import UserListDropdown from '../components/UserDropdown';
 import DeleteReview from '../components/DeleteReviewForm'; 
+import AlbumDropdown from '../components/AlbumDropdown';
 
 function UserPage({ userId }) {
   const [user, setUser] = useState(null);
@@ -63,6 +64,7 @@ function UserPage({ userId }) {
               <UserListDropdown title="Followers" userList={user.followersList || []} />
               <UserListDropdown title="Following" userList={user.followingList || []} />
             </div>
+            <AlbumDropdown title="Liked Albums" albumList={user.likedAlbumsList || []} />
           </div>
         )}
         <div className="reviews-grid">

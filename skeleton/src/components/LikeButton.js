@@ -6,6 +6,7 @@ function LikeButton({ reviewId, userId }) {
     const handleLike = async () => {
         const reviewRef = doc(db, 'reviews', reviewId);
 
+
         try {
             await updateDoc(reviewRef, {
                 likes: arrayUnion(userId)
