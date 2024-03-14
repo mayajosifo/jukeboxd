@@ -4,7 +4,7 @@ import './Navbar.css';
 const Navbar = ({userId}) => {
   return (
     <nav className="navbar">
-      <h1>test</h1>
+      <h1>Jukeboxd!</h1>
       <div className="links">
         <Link to={`/user-page/${userId}`}>Home</Link>
         <Link to="/search">Search</Link>

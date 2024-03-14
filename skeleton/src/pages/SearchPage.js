@@ -8,6 +8,8 @@ import './SearchPage.css';
 
 const SearchPage = ({userId}) => {
 
+  console.log(userId)
+
   const [searchBy, setSearchBy] = useState('album');
 
   return ( 
@@ -20,9 +22,9 @@ const SearchPage = ({userId}) => {
         <option value = "user">User</option>
       </select>
 
-      {searchBy === 'album' ? <SearchAlbum searchByProp={searchBy} /> :
-        searchBy === 'artist' ? <SearchArtist searchByProp={searchBy} /> :
-        <SearchUser userId={userId} />}
+      {searchBy === 'album' ? (userId ? <SearchAlbum tempsearchBy={searchBy} userId={userId} /> : <p>Loading user data...</p>) :
+      searchBy === 'artist' ? <SearchArtist searchByProp={searchBy} userId={userId} /> :
+     <SearchUser userId={userId} />}
     </div>
   );
 }

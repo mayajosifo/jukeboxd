@@ -12,27 +12,21 @@ Welcome to Jukeboxd! Jukeboxd is an album review site where you can post your ra
 7. View your followers and following lists
 
 **How to Run Jukeboxd**
-**Frontend:**
-1. Clone the repository
-   - git clone https://github.com/mayajosifo/jukeboxd
-2. Enter the correct working directory
-   - cd src
-3. Install dependencies
-   - npm install
-  
 
-**Backend:**
-1. To store review and follower data, you will need to set up a firestore server.
-2. Once you have a firebase configuration, create a .env file. It should look like this, but with your own information:
-  - REACT_APP_FIREBASE_API_KEY=YOUR_API_KEY
-    REACT_APP_FIREBASE_AUTH_DOMAIN=AUTH_DOMAIN
-    REACT_APP_FIREBASE_PROJECT_ID=YOUR_PROJECT_ID
-    REACT_APP_FIREBASE_STORAGE_BUCKET=YOUR_STORAGE_BUCKET
-    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=YOUR_SENDER_ID
-    REACT_APP_FIREBASE_APP_ID=YOUR_APP_ID
-3. Now, run the project!
-  - npm start
-  - Navigate to http://localhost:3000
+**Prerequisites**:
+1. Node.js and npm must be installed
+2. You must have a firebase project set up with an API key, Auth Domain, Project ID, Storage Bucket, Messaging Sender ID, and App ID.
+   
+In the root directory of the project, there is a shell script called setup.sh that:
+1. Checks the prerequisites
+2. Clones the github repository
+3. Navigates to the necessary directory
+4. Installs program dependencies
+5. Prompts you to enter your firebase information
+6. Creates a custom .env file with your firebase information
+7. Starts up the app.
+
+To use our project, simply run ./setup.sh
 
 **Happy Reviewing!**
  

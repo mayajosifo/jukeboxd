@@ -24,8 +24,12 @@ function App() {
           path='/user-page/:userId'
           element={isSignedIn ? <UserPage userId={userId}/> : <Navigate replace to='/' />}
           />
-        <Route path='/search/' element={<SearchPage userId={userId}/>} />
-        <Route path='/album/:id' element={<ViewAlbum userId={userId}/>} />
+        <Route path='/search/' 
+        element={isSignedIn ? <SearchPage userId={userId}/> : <Navigate replace to='/' />}
+          />
+        <Route path='/album/:id' 
+        element={isSignedIn ? <ViewAlbum userId={userId}/> : <Navigate replace to='/' />}
+        />
    
       
       </Routes>
