@@ -54,6 +54,7 @@ function SignInPage({ setIsSignedIn, setUserId })
    return(
     <div className={styles.form}>
         <div className={styles.container}>
+        <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className={styles.logo} />
         <h1>Guess Who's Back?</h1>
             {errorMessage && <div className={styles.error}>{errorMessage}</div>}
             <form className={styles.sign_in_form} onSubmit={handleSignIn}>

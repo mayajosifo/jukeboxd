@@ -65,3 +65,10 @@
     margin-bottom: 10px;
 }
     
+.form .logo {
+    display: block; /* or inline-block */
+    margin: 0 auto; /* center the logo if container is flex or block */
+    max-width: 500px; /* or whatever size you want */
+    height: auto; /* to maintain aspect ratio */
+    margin-bottom: -100px;
+}

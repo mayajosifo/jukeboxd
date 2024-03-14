@@ -62,6 +62,7 @@ function SignUpPage( { setIsSignedIn, setUserId })
     return (
         <div className={styles.form}>
             <div className={styles.container}>
+            <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className={styles.logo} />
                 <h1>Welcome to Jukeboxd!</h1>
                     {errorMessage && <div className={styles.error}>{errorMessage}</div>}
                     <form className={styles.sign_up_form} onSubmit={handleSignUp}>
