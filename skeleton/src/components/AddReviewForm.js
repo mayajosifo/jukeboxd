@@ -27,7 +27,7 @@ function AddReviewForm({ onClose, albumId, userId }){
                 reviewDate: new Date() // Adds a timestamp
             });
     
-            console.log('Review added successfully', docRef.id);
+            //console.log('Review added successfully', docRef.id);
     
             // Add the same review document to the "userReviews" subcollection of the specific user
             await addDoc(collection(db, "users", userId, "userReviews"), {
@@ -47,7 +47,7 @@ function AddReviewForm({ onClose, albumId, userId }){
                 reviewDate: new Date() // A
             });
     
-            console.log('User review added successfully');
+            //console.log('User review added successfully');
     
             // Clear the form fields after submission
             setAlbumsId('');

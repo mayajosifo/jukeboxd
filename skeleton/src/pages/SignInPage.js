@@ -35,8 +35,8 @@ function SignInPage({ setIsSignedIn, setUserId })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log({errorCode})
-                console.log({errorMessage})
+                //console.log({errorCode})
+                //console.log({errorMessage})
 
                 if (errorCode === 'auth/invalid-credential') {
                     setErrorMessage('User not found. Email/Password may be incorrect.')

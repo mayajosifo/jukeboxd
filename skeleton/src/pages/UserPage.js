@@ -36,7 +36,7 @@ function UserPage({ userId }) {
 
         setReviews(reviewsWithAlbums);
       } else {
-        console.log('User not found');
+        console.error('User not found');
       }
     };
 

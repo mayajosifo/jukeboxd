@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const LikeAlbum = ( {albumId, userId} ) => {
 
-    console.log("album ID:", albumId, "userID:", userId)
+    //console.log("album ID:", albumId, "userID:", userId)
 
     const [likeButtonName, setLikeButtonName] = useState("Like")
 

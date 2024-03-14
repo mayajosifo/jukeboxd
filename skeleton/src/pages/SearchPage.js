@@ -8,7 +8,7 @@ import './SearchPage.css';
 
 const SearchPage = ({userId}) => {
 
-  console.log(userId)
+  //console.log(userId)
 
   const [searchBy, setSearchBy] = useState('album');
 

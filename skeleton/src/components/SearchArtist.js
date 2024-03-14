@@ -22,7 +22,7 @@ const SearchAlbum = () => {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  console.log(searchBy)
+  //console.log(searchBy)
 
   const handleSearch = async () => {
     if (!searchTerm) return;
