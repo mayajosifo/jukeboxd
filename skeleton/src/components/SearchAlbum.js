@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import './SearchArtist.css';
+import './SearchAlbum.css';
 import { db } from '../config/firebase'; 
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import LikeAlbum from './LikeAlbum';
 
-const SearchAlbum = ( {tempsearchBy, userId} ) => {
+const SearchAlbum = ( {searchBy, userId} ) => {
 
   console.log("searchalbum user id:", userId)
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchBy, setSearchBy] = useState('album');
+  //const [searchBy, setSearchBy] = useState('album');
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(false);
 
