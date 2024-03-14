@@ -18,6 +18,32 @@ body, html, #root, .App {
   padding: 20px;
 }
 
+/* We got lazy and defined some global stylings: */
+
+h1 {
+  color: #196ac6;
+}
+
+.reviews-header {
+  text-align: center;
+}
+
+.user-counts {
+  display: flex;
+}
+.user-counts > * {
+  margin-right: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 
 /* Styles for displaying album information */

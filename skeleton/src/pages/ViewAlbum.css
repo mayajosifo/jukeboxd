@@ -6,3 +6,12 @@
     justify-content: center;
     text-align: center;
 }
+
+.album-container {
+    display: flex;
+    align-items: top;
+}
+
+.album-info {
+    margin-left: 10px; /* Adjust this value as needed */
+}

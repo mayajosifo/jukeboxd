@@ -50,32 +50,33 @@ function UserPage({ userId }) {
     setReviews(updatedReviews);
   };
 
+  if (!user) {
+    return <div>Loading...</div>; // Return a loading indicator while user data is being fetched
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Profile</h1>
+        <h1>Welcome Back, {user.userName}</h1>
       </header>
       <main>
-        {user && (
-          <div>
-            <h1>Welcome Back, {user.userName}</h1>
-            <div className="user-counts">
-              <UserListDropdown title="Followers" userList={user.followersList || []} />
-              <UserListDropdown title="Following" userList={user.followingList || []} />
-            </div>
+        <div>
+          <div className="user-counts">
+            <UserListDropdown title="Followers" userList={user.followersList || []} />
+            <UserListDropdown title="Following" userList={user.followingList || []} />
             <AlbumDropdown title="Liked Albums" albumList={user.likedAlbumsList || []} />
           </div>
-        )}
+        </div>
+        <header className="reviews-header">
+          <h1>User Reviews:</h1>
+        </header>
         <div className="reviews-grid">
           {reviews.map(review => (
             <div key={review.id} className="review-container">
               <div className="review">
-                <Review review={review} userName={user ? user.userName : 'Unknown User'}/>
-                <DeleteReview reviewIdToDelete={review.id} userId={userId} onUpdate={updateReviews}
-/> 
+                <Review review={review} userName={user.userName}/>
+                <DeleteReview reviewIdToDelete={review.id} userId={userId} onUpdate={updateReviews}/> 
               </div>
-
             </div>
           ))}
         </div>

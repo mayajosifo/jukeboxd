@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { collection, doc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import styles from './ViewAlbum.module.css';
+import styles from './ViewAlbum.css';
 import AlbumAverageRating from '../components/AlbumAverageRating';
 import Review from '../components/Review'
 
@@ -61,18 +61,20 @@ function ViewAlbum({userId}) {
 
     return (
         <div>
-            <h1>Album Review Page</h1>
-            <button onClick={handleButtonClick}>Add Review</button>
-            {showReview && <AddReviewForm onClose={handleCloseForm} albumId={albumId} userId={userId}/>}
+            <h1 style={{textAlign: 'center'}}>Album Review Page</h1>
             {album && (
-                <div>
-                    <h2>Name: {album.albumName}</h2>
-                    <p>Artist: {album.artistName}</p>
+                <div className='album-container'>
                     {album.coverUrl && <img src={album.coverUrl} alt="Album Cover" style={{ width: 300, height: 300 }} />}
-                    <p>Year: {album.releaseYear}</p>
+                    <div className='album-info'>
+                        <h2>Name: {album.albumName}</h2>
+                        <p>Artist: {album.artistName}</p>
+                        <p>Year: {album.releaseYear}</p>
+                    </div>
                 </div>
             )}
             <AlbumAverageRating reviews={reviews} />
+            <button onClick={handleButtonClick}>Add Review</button>
+            {showReview && <AddReviewForm onClose={handleCloseForm} albumId={albumId} userId={userId}/>}
             <h2>Reviews:</h2>
             <div className={styles.reviewsContainer}>
                 {reviews.map(review => (
