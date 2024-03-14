@@ -72,7 +72,7 @@ function UserPage({ userId }) {
         </header>
         <div className="reviews-grid">
           {reviews.map(review => (
-            <div key={review.id} className="review-container">
+            <div key={review.id} className="meta-review-container">
               <div className="review">
                 <Review review={review} userName={user.userName}/>
                 <DeleteReview reviewIdToDelete={review.id} userId={userId} onUpdate={updateReviews}/> 

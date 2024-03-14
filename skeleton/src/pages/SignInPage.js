@@ -11,6 +11,12 @@ function SignInPage({ setIsSignedIn, setUserId })
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('')
 
+    // whenever you logout make sure the userId and isSignedIn is reset
+    useEffect(() => {
+        setIsSignedIn(false);
+        setUserId(null); 
+    }, [setIsSignedIn, setUserId]); 
+
     const handleSignUpClick = () => {
         navigate('/sign-up');
     };

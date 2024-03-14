@@ -60,7 +60,7 @@ function ViewAlbum({userId}) {
 
 
     return (
-        <div>
+        <div className='page-container'>
             <h1 style={{textAlign: 'center'}}>Album Review Page</h1>
             {album && (
                 <div className='album-container'>
