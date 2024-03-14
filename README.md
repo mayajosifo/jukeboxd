@@ -12,6 +12,7 @@ Welcome to Jukeboxd! Jukeboxd is an album review site where you can post your ra
 7. View your followers and following lists
 
 **How to Run Jukeboxd**
+
 **Prerequisites**:
 1. Node.js and npm must be installed
 2. You must have a firebase project set up with an API key, Auth Domain, Project ID, Storage Bucket, Messaging Sender ID, and App ID.
