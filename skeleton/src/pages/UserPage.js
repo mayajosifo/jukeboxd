@@ -5,6 +5,7 @@ import Review from '../components/Review';
 import UserListDropdown from '../components/UserDropdown';
 import DeleteReview from '../components/DeleteReviewForm'; 
 import AlbumDropdown from '../components/AlbumDropdown';
+import './Background.css'
 
 function UserPage({ userId }) {
   const [user, setUser] = useState(null);
@@ -55,7 +56,9 @@ function UserPage({ userId }) {
   }
 
   return (
-    <div className="App">
+    <div className="page-background">
+      <div className="content-container">
+      <div className="App">
       <header className="App-header">
         <h1>Welcome Back, {user.userName}</h1>
       </header>
@@ -81,6 +84,8 @@ function UserPage({ userId }) {
           ))}
         </div>
       </main>
+      </div>
+    </div>
     </div>
   );
 }

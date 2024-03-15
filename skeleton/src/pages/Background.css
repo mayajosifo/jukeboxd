@@ -1,0 +1,29 @@
+.page-background {
+    position: relative; /* Establish relative positioning */
+    z-index: 1; /* Ensures stacking context for content */
+    /* Other styles here */
+  }
+  
+  .page-background::before {
+    content: ""; /* Required for pseudo-elements */
+    position: absolute; /* Position absolutely within .page-background */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/public/logo.png');
+    background-size: contain;
+    background-attachment: scroll; /* 'fixed' for a parallax effect, 'scroll' for normal behavior */
+    background-position: center top;
+    background-repeat: repeat-y;
+    
+    opacity: 0.09; /* Example opacity */
+    z-index: -1; /* Behind the content */
+  }
+  
+  /* Make sure content is above the pseudo-element */
+  .content-container {
+    position: relative; /* Establish relative positioning */
+    z-index: 2; /* Higher z-index than the pseudo-element */
+    /* Other content styles here */
+  }
