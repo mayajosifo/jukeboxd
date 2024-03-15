@@ -75,7 +75,7 @@ To setup the connection to Firebase/Firestore, follow these steps:
     npm install
     ```
     
-9. Create .env file in root directory of jukeboxd-app and copy and paste the contents from "creds.txt" into it
+9. Create .env file in root directory of jukeboxd-app and copy and paste the contents from "creds.txt" into it, which we emailed directly to the TA for security purposes.
     
 
 10. Now, everything should be set up. You can start the application by running:
