@@ -1,50 +1,90 @@
 # jukeboxd
-# **Description**
-Welcome to Jukeboxd! Jukeboxd is an album review site / social media hybrid
-where you can both write your own reviews on albums and interact with the reviews of your friends!
+## **Description**
+Welcome to Jukeboxd! Jukeboxd is an album review site / social media hybrid where you can both write your own reviews on albums and interact with the reviews of your friends!
 
-**On Jukeboxd, you can:**
+On Jukeboxd, you can:
 1. Post your own reviews
 2. View your reviews from newest to oldest
-3. Search for your albums by its title or artist
+3. Search for albums by their title or artist
 4. View the reviews and average rating of an album
 5. Search for other users and their reviews
 6. Follow other users
 7. View your followers and following lists
 
-**How to Run Jukeboxd**
+## **How to Run Jukeboxd**
 
-**Prerequisites**:
-1. Node.js and npm must be installed
+**Prerequisites:**
+- Node.js and npm must be installed on your machine.
 
-**Setting Up Firebase/Firstore Connection**
-Hi! Allow me to walk you through how to setup the connection to Firebase/Firestore
+**Setting Up Firebase/Firestore Connection**
+To setup the connection to Firebase/Firestore, follow these steps:
 
+1. Install Firebase by running the following command in your terminal:
 
-For React:
+    ```
+    npm install firebase
+    ```
 
-    Initial Step:
-        You will need to install firebase with the following terminal command:
+2. For security purposes, the `.env` file with the API credentials was not included in the Git repo. However, we have provided a separate file called "creds.txt" with the necessary information in it. Please create a `.env` (simply named `.env`) file in the root directory of `jukeboxd-app` and copy and paste the data from `creds.txt` into it.
 
-            npm install firebase
+**Manual Setup Instructions:**
 
-    API Credentials:
-        For security purposes, the .env file with the API credentials was not included in the Git repo. However, we have
-        provided a separate file called "creds.txt" with the neccessary information in it.
-        Please create a .env (simply named .env) file in the root directory of jukeboxd-app and copy and paste the data from creds.txt into it.
-   
-**In the root directory of the project, there is a shell script called setup.sh that:**
-1. Checks the prerequisites
-2. Clones the github repository
-3. Navigates to the necessary directory
-4. Installs program dependencies
-5. Prompts you to enter your firebase information
-6. Creates a custom .env file with your firebase information
-7. Starts up the app.
+1. Open your terminal.
 
-To use our project, simply run ./setup.sh
+3. Check if Node.js is installed:
 
+    ```
+    node -v
+    ```
 
+   If it's not installed, please install it from the [Node.js website](https://nodejs.org/).
+
+4. Check if npm is installed:
+
+    ```
+    npm -v
+    ```
+
+   If it's not installed, it should have been installed with Node.js. If it's missing, reinstall Node.js.
+
+5. Clone the Jukeboxd repository by running:
+
+    ```
+    git clone git@github.com:mayajosifo/jukeboxd.git my-react-app
+    ```
+
+   Replace `my-react-app` with the name of the folder where you want to clone the repository.
+
+6. Change to the directory of the cloned repository:
+
+    ```
+    cd my-react-app
+    ```
+
+7. If there is a `jukeboxd-app` directory within, navigate into it:
+
+    ```
+    cd jukeboxd-app
+    ```
+
+   If this directory does not exist, check that you have cloned the correct repository and that the repository structure has not changed.
+
+8. Install the application dependencies:
+
+    ```
+    npm install
+    ```
+    
+9. Create a .env file with either your Firebase credentials or our credentials from "creds.txt"
+    
+
+10. Now, everything should be set up. You can start the application by running:
+
+    ```
+    npm start
+    ```
+
+This will start your application and typically open a browser window displaying the Jukeboxd site.
 
 **Structure of our Database**
 
@@ -169,11 +209,11 @@ To use our project, simply run ./setup.sh
 
 
 **Authors and Contributors:**
-John Reinker
-Maya Josifovska
-Garratt Army
-Andrew Bistras
-Leah George
+John Reinker,
+Maya Josifovska,
+Garratt Army,
+Andrew Bistras,
+Leah George,
 
 **Happy Reviewing!**
  
