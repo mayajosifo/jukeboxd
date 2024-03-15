@@ -28,11 +28,11 @@ fi
 cd $appDirectory
 
 # Assuming the necessary code and package.json are inside 'jukeboxd app' directory
-if [ -d "jukeboxd app" ]; then
-    echo "Navigating to the jukeboxd app directory..."
-    cd jukeboxd app
+if [ -d "jukeboxd-app" ]; then
+    echo "Navigating to the jukeboxd-app directory..."
+    cd jukeboxd-app
 else
-    echo "The jukeboxd directory does not exist. Please check your repository structure."
+    echo "The jukeboxd-app directory does not exist. Please check your repository structure."
     exit 1
 fi
 
@@ -64,7 +64,7 @@ EOF
 
 echo "Firebase configuration has been set."
 
-cd 'jukeboxd app'
+cd 'jukeboxd-app'
 
 # Final message
 echo "Setup and installation completed. You can now start the application by running 'npm start'."
