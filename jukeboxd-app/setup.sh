@@ -40,33 +40,8 @@ fi
 echo "Installing application dependencies..."
 npm install
 
-cd ..
-
-# Prompt for Firebase configuration
-echo "Please enter your Firebase configuration details:"
-read -p "Firebase API Key: " firebaseApiKey
-read -p "Firebase Auth Domain: " firebaseAuthDomain
-read -p "Firebase Project ID: " firebaseProjectId
-read -p "Firebase Storage Bucket: " firebaseStorageBucket
-read -p "Firebase Messaging Sender ID: " firebaseMessagingSenderId
-read -p "Firebase App ID: " firebaseAppId
-
-# Create .env file with Firebase configuration
-echo "Creating .env file with your Firebase configuration..."
-cat <<EOF > .env
-REACT_APP_FIREBASE_API_KEY=$firebaseApiKey
-REACT_APP_FIREBASE_AUTH_DOMAIN=$firebaseAuthDomain
-REACT_APP_FIREBASE_PROJECT_ID=$firebaseProjectId
-REACT_APP_FIREBASE_STORAGE_BUCKET=$firebaseStorageBucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=$firebaseMessagingSenderId
-REACT_APP_FIREBASE_APP_ID=$firebaseAppId
-EOF
-
-echo "Firebase configuration has been set."
-
-cd 'jukeboxd-app'
-
 # Final message
 echo "Setup and installation completed. You can now start the application by running 'npm start'."
 npm start
+
 
