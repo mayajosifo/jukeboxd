@@ -28,9 +28,9 @@ fi
 cd $appDirectory
 
 # Assuming the necessary code and package.json are inside 'skeleton' directory
-if [ -d "skeleton" ]; then
-    echo "Navigating to the skeleton directory..."
-    cd skeleton
+if [ -d "jukeboxd app" ]; then
+    echo "Navigating to the jukeboxdapp directory..."
+    cd 'jukeboxd app'
 else
     echo "The skeleton directory does not exist. Please check your repository structure."
     exit 1
@@ -39,6 +39,8 @@ fi
 # Install application dependencies
 echo "Installing application dependencies..."
 npm install
+
+cd ..
 
 # Prompt for Firebase configuration
 echo "Please enter your Firebase configuration details:"
@@ -62,6 +64,9 @@ EOF
 
 echo "Firebase configuration has been set."
 
+cd 'jukeboxd app'
+
 # Final message
 echo "Setup and installation completed. You can now start the application by running 'npm start'."
 npm start
+
