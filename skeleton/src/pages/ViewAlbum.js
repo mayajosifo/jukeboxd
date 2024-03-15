@@ -6,7 +6,6 @@ import { db } from '../config/firebase';
 import styles from './ViewAlbum.css';
 import AlbumAverageRating from '../components/AlbumAverageRating';
 import ViewAlbumReview from '../components/ViewAlbumReview';
-import Review from '../components/Review'
 import './Background.css'
 
 function ViewAlbum({userId}) {
