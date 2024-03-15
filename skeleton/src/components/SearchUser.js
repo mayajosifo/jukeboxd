@@ -75,16 +75,18 @@ const SearchUser = ({userId}) => {
             <button onClick={handleSearch}>Search</button>
             {loading && <p>Loading...</p>}
         </div>
-        {userName && (
-            <div className="user-reviews-header">
-                <h2>{userName}'s reviews</h2>
-                <FollowUser currentUserId={userId} otherUserId={searchedUserId} /> 
+        <div className="results-container">
+            {userName && (
+                <div className="user-reviews-header">
+                    <h2>{userName}'s reviews</h2>
+                    <FollowUser currentUserId={userId} otherUserId={searchedUserId} /> 
+                </div>
+            )}
+            <div className="reviews-container">
+                {reviews.map(review => (
+                    <Review key={review.id} review={review} userName={review.userName}/>
+                ))}
             </div>
-        )}
-        <div className="reviews-container">
-            {reviews.map(review => (
-                <Review key={review.id} review={review} userName={review.userName}/>
-            ))}
         </div>
       </div>
     );
