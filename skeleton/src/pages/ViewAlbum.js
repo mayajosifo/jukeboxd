@@ -5,8 +5,7 @@ import { collection, doc, getDoc, query, where, getDocs } from 'firebase/firesto
 import { db } from '../config/firebase';
 import styles from './ViewAlbum.css';
 import AlbumAverageRating from '../components/AlbumAverageRating';
-import Review from '../components/Review'
-
+import ViewAlbumReview from '../components/ViewAlbumReview';
 
 function ViewAlbum({userId}) {
     const [showReview, setShowReview] = useState(false);
@@ -85,7 +84,7 @@ function ViewAlbum({userId}) {
     <div className={styles.reviewsContainer} style={{ marginLeft: '40px' }}>
         {reviews.map(review => (
             <div key={review.id} style={{ marginRight: '40px', marginBottom: '40px' }}>
-                <Review review={review} userName={review.userName} />
+                <ViewAlbumReview review={review} userName={review.userName} />
             </div>
         ))}
     </div>
