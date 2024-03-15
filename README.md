@@ -1,6 +1,7 @@
 # jukeboxd
 # **Description**
-Welcome to Jukeboxd! Jukeboxd is an album review site where you can post your ratings and reviews on your favorite albums. 
+Welcome to Jukeboxd! Jukeboxd is an album review site / social media hybrid
+where you can both write your own reviews on albums and interact with the reviews of your friends!
 
 **On Jukeboxd, you can:**
 1. Post your own reviews
@@ -17,7 +18,7 @@ Welcome to Jukeboxd! Jukeboxd is an album review site where you can post your ra
 1. Node.js and npm must be installed
 2. You must have a firebase project set up with an API key, Auth Domain, Project ID, Storage Bucket, Messaging Sender ID, and App ID.
    
-In the root directory of the project, there is a shell script called setup.sh that:
+**In the root directory of the project, there is a shell script called setup.sh that:**
 1. Checks the prerequisites
 2. Clones the github repository
 3. Navigates to the necessary directory
@@ -27,6 +28,13 @@ In the root directory of the project, there is a shell script called setup.sh th
 7. Starts up the app.
 
 To use our project, simply run ./setup.sh
+
+**Authors and Contributors:**
+John Reinker
+Maya Josifovska
+Garratt Army
+Andrew Bistras
+Leah George
 
 **Happy Reviewing!**
  

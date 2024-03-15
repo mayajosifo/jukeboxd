@@ -6,6 +6,8 @@ import { db } from '../config/firebase';
 import styles from './ViewAlbum.css';
 import AlbumAverageRating from '../components/AlbumAverageRating';
 import ViewAlbumReview from '../components/ViewAlbumReview';
+import Review from '../components/Review'
+import './Background.css'
 
 function ViewAlbum({userId}) {
     const [showReview, setShowReview] = useState(false);
@@ -59,6 +61,7 @@ function ViewAlbum({userId}) {
 
 
     return (
+        
 <div className='page-container'>
     <h1 style={{textAlign: 'center'}}>Album Review Page</h1>
     {album && (
