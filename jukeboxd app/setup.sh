@@ -27,12 +27,12 @@ fi
 # Change directory to the application
 cd $appDirectory
 
-# Assuming the necessary code and package.json are inside 'skeleton' directory
+# Assuming the necessary code and package.json are inside 'jukeboxd app' directory
 if [ -d "jukeboxd app" ]; then
-    echo "Navigating to the jukeboxdapp directory..."
-    cd 'jukeboxd app'
+    echo "Navigating to the jukeboxd app directory..."
+    cd jukeboxd app
 else
-    echo "The skeleton directory does not exist. Please check your repository structure."
+    echo "The jukeboxd directory does not exist. Please check your repository structure."
     exit 1
 fi
 
